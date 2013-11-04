@@ -754,8 +754,50 @@
             <layout class="QGridLayout" name="gridLayout_12">
              <item row="0" column="0">
               <layout class="QGridLayout" name="gridLayout_3">
+               <item row="1" column="1">
+                <widget class="QLabel" name="BJCPStyleMinimumColorLabel">
+                 <property name="text">
+                  <string>0.0</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0" colspan="2">
+                <widget class="QComboBox" name="BJCPStyleComboBox"/>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_26">
+                 <property name="font">
+                  <font>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Color</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="4" colspan="2">
+                <spacer name="horizontalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
                <item row="0" column="2">
-                <widget class="QLabel" name="BJCPStyleNumber">
+                <widget class="QLabel" name="BJCPStyleNumberLabel">
                  <property name="font">
                   <font>
                    <weight>75</weight>
@@ -766,93 +808,18 @@
                   <string>1A</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0" colspan="2">
-                <widget class="QComboBox" name="BJCPStyleComboBox">
-                 <item>
-                  <property name="text">
-                   <string>Lite American Lager</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Standard American Lager</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Premium American Lager</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Munich Helles</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Dortmunder Export</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QLabel" name="label_26">
-                 <property name="font">
-                  <font>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Color Specification</string>
-                 </property>
-                 <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="2">
-                <widget class="QLabel" name="label_25">
+               <item row="0" column="3">
+                <widget class="QLabel" name="BJCPStyleLabel">
                  <property name="text">
-                  <string>Maximum</string>
+                  <string>--</string>
                  </property>
                 </widget>
                </item>
-               <item row="3" column="2">
-                <widget class="QLabel" name="BJCPStyleMaximumColor">
-                 <property name="text">
-                  <string>99.99</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_24">
-                 <property name="text">
-                  <string>Minimum</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="BJCPStyleMinimumColor">
-                 <property name="text">
-                  <string>0.0</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
+               <item row="1" column="2">
                 <widget class="QLabel" name="label_22">
                  <property name="text">
                   <string>to</string>
@@ -861,6 +828,29 @@
                   <set>Qt::AlignCenter</set>
                  </property>
                 </widget>
+               </item>
+               <item row="1" column="3">
+                <widget class="QLabel" name="BJCPStyleMaximumColorLabel">
+                 <property name="text">
+                  <string>99.99</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <spacer name="verticalSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
                </item>
               </layout>
              </item>

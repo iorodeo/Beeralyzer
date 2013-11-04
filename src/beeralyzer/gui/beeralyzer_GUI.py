@@ -14,6 +14,7 @@ from beeralyzer import Beeralyzer
 from beeralyzer_config import BeeralyzerConfigFile
 import numpy.random
 from portfolio import BeerPortfolio
+from numpy import recfromcsv
 
 DEBUG = False
 
@@ -65,7 +66,8 @@ class beeralyzerGui(QtGui.QMainWindow):
         
         self.populateSerialPortComboBox()
         self.loadConfiguration() 
-        self.loadPortfolioData()       
+        self.loadPortfolioData()   
+        self.loadBJCPData()    
             
     def populateSerialPortComboBox(self):
         try:
@@ -102,9 +104,14 @@ class beeralyzerGui(QtGui.QMainWindow):
         for key in portfolioNameList:
             self.beerNameComboBox.addItem(key)
             self.currentMeasurementPortfolioComboBox.addItem(key)
-        self.updatePortfolioInfo()
+        self.updatePortfolioInfo_Callback()
 
-    def updatePortfolioInfo(self):
+    def loadBJCPData(self):
+        self.BJCPData = recfromcsv('bjcp2008.csv', delimiter=',')
+        for BJCPStyle in self.BJCPData.style:
+            self.BJCPStyleComboBox.addItem(BJCPStyle)
+        
+    def updatePortfolioInfo_Callback(self):
         currentPortfolioName = self.beerNameComboBox.currentText()
         selectedItem = self.portfolio.get(str(currentPortfolioName))
         if selectedItem is not None:
@@ -116,7 +123,7 @@ class beeralyzerGui(QtGui.QMainWindow):
             self.minTurbiditySpecLineEdit.setText(self.floatToString(selectedItem.minTurbidity))
             self.maxTurbiditySpecLineEdit.setText(self.floatToString(selectedItem.maxTurbidity))
     
-    def updateSelectedMeasurementPortfolioInfo(self):
+    def updateSelectedMeasurementPortfolioInfo_Callback(self):
         currentPortfolioName = self.currentMeasurementPortfolioComboBox.currentText()
         selectedItem = self.portfolio.get(str(currentPortfolioName))
         if selectedItem is not None:
@@ -124,6 +131,14 @@ class beeralyzerGui(QtGui.QMainWindow):
             self.currentMaxColorSpecLabel.setText(self.floatToString(selectedItem.maxColor))
             self.currentMinTurbiditySpecLabel.setText(self.floatToString(selectedItem.minTurbidity))
             self.currentMaxTurbiditySpecLabel.setText(self.floatToString(selectedItem.maxTurbidity))
+    
+    def updateSelectedBJCPStyle_Callback(self):
+        currentSelection = self.BJCPData[self.BJCPData.style==str(self.BJCPStyleComboBox.currentText())] 
+        self.BJCPStyleNumberLabel.setText(str(currentSelection.number[0]))
+        self.BJCPStyleMinimumColorLabel.setText(str(currentSelection.srmmin[0]))
+        self.BJCPStyleMaximumColorLabel.setText(str(currentSelection.srmmax[0]))
+        self.BJCPStyleLabel.setText(str(currentSelection.category[0]))
+
 
     def connectActions(self):
         self.serialPortCombo.editTextChanged.connect(self.portChanged_Callback)
@@ -141,8 +156,9 @@ class beeralyzerGui(QtGui.QMainWindow):
         self.savePortfolioItemPushButton.clicked.connect(self.savePortfolioItemClicked_Callback)
         self.deletePortfolioItemPushButton.clicked.connect(self.deletePortfolioItemClicked_Callback)
         
-        self.beerNameComboBox.editTextChanged.connect(self.updatePortfolioInfo)
-        self.currentMeasurementPortfolioComboBox.currentIndexChanged.connect(self.updateSelectedMeasurementPortfolioInfo)
+        self.beerNameComboBox.editTextChanged.connect(self.updatePortfolioInfo_Callback)
+        self.currentMeasurementPortfolioComboBox.currentIndexChanged.connect(self.updateSelectedMeasurementPortfolioInfo_Callback)
+        self.BJCPStyleComboBox.currentIndexChanged.connect(self.updateSelectedBJCPStyle_Callback)
         
     def reloadSerialPortListClicked_Callback(self):
         self.serialPortCombo.clear()
