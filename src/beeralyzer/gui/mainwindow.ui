@@ -281,7 +281,7 @@
               </widget>
              </item>
              <item row="0" column="2">
-              <widget class="QComboBox" name="comboBox">
+              <widget class="QComboBox" name="colorMeasurementUnitComboBox">
                <property name="minimumSize">
                 <size>
                  <width>120</width>
@@ -294,47 +294,6 @@
                  <height>16777215</height>
                 </size>
                </property>
-               <item>
-                <property name="text">
-                 <string>SRM</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>EBC</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Absorbance</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <widget class="QComboBox" name="comboBox_2">
-               <property name="minimumSize">
-                <size>
-                 <width>120</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>120</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <item>
-                <property name="text">
-                 <string>Absorbance</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>NTU</string>
-                </property>
-               </item>
               </widget>
              </item>
              <item row="2" column="0">
@@ -348,6 +307,22 @@
                </property>
                <property name="text">
                 <string>Description</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QComboBox" name="turbidityMeasurementUnitComboBox">
+               <property name="minimumSize">
+                <size>
+                 <width>120</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>120</width>
+                 <height>16777215</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -370,26 +345,6 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="5">
-              <widget class="QPushButton" name="calibratePushButton">
-               <property name="text">
-                <string>Calibrate</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="5">
-              <widget class="QPushButton" name="measurePushButton">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Measure!</string>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="3">
               <widget class="QPlainTextEdit" name="colorPreviewEdit">
                <property name="enabled">
@@ -406,6 +361,26 @@
                  <width>0</width>
                  <height>0</height>
                 </size>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="4">
+              <widget class="QPushButton" name="measurePushButton">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Measure!</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="4">
+              <widget class="QPushButton" name="calibratePushButton">
+               <property name="text">
+                <string>Calibrate</string>
                </property>
               </widget>
              </item>
@@ -440,6 +415,32 @@
              <layout class="QGridLayout" name="gridLayout_10">
               <item row="0" column="0">
                <layout class="QGridLayout" name="gridLayout_9">
+                <item row="0" column="0" colspan="4">
+                 <widget class="QComboBox" name="currentMeasurementPortfolioComboBox">
+                  <property name="minimumSize">
+                   <size>
+                    <width>300</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="0">
+                 <widget class="QLabel" name="label_4">
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>On date</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
                 <item row="1" column="0">
                  <widget class="QLabel" name="label_3">
                   <property name="font">
@@ -459,19 +460,13 @@
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="label_5">
-                  <property name="font">
-                   <font>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
+                <item row="1" column="1">
+                 <widget class="QLabel" name="currentMinColorSpecLabel">
                   <property name="text">
-                   <string>Turbidity</string>
+                   <string>0.0</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   <set>Qt::AlignCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -485,16 +480,6 @@
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="1">
-                 <widget class="QLabel" name="currentMinColorSpecLabel">
-                  <property name="text">
-                   <string>0.0</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
                 <item row="1" column="3">
                  <widget class="QLabel" name="currentMaxColorSpecLabel">
                   <property name="text">
@@ -502,6 +487,22 @@
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_5">
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Turbidity</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -535,13 +536,33 @@
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="0" colspan="4">
-                 <widget class="QComboBox" name="currentMeasurementPortfolioComboBox">
-                  <property name="minimumSize">
-                   <size>
-                    <width>300</width>
-                    <height>0</height>
-                   </size>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="label_10">
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Last measured</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="1" colspan="3">
+                 <widget class="QLabel" name="lastMeasuredValuesLabel">
+                  <property name="text">
+                   <string>---</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="1" colspan="3">
+                 <widget class="QLabel" name="lastMeasuredDateLabel">
+                  <property name="text">
+                   <string>---</string>
                   </property>
                  </widget>
                 </item>
@@ -564,16 +585,6 @@
                 <layout class="QGridLayout" name="gridLayout_5">
                  <item row="0" column="0">
                   <layout class="QGridLayout" name="gridLayout_4">
-                   <item row="0" column="1">
-                    <widget class="QLineEdit" name="lineEdit_3">
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                    </widget>
-                   </item>
                    <item row="1" column="0">
                     <widget class="QLabel" name="label_12">
                      <property name="text">
@@ -583,9 +594,6 @@
                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                      </property>
                     </widget>
-                   </item>
-                   <item row="1" column="1">
-                    <widget class="QDateEdit" name="dateEdit"/>
                    </item>
                    <item row="0" column="0">
                     <widget class="QLabel" name="label_11">
@@ -612,10 +620,13 @@
                      <property name="text">
                       <string>Dilution</string>
                      </property>
+                     <property name="alignment">
+                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                     </property>
                     </widget>
                    </item>
                    <item row="3" column="2">
-                    <widget class="QPushButton" name="pushButton_2">
+                    <widget class="QPushButton" name="saveMeasurementPushButton">
                      <property name="font">
                       <font>
                        <weight>75</weight>
@@ -628,7 +639,7 @@
                     </widget>
                    </item>
                    <item row="2" column="1" colspan="2">
-                    <widget class="QLineEdit" name="lineEdit_4">
+                    <widget class="QLineEdit" name="operatorLineEdit">
                      <property name="minimumSize">
                       <size>
                        <width>200</width>
@@ -638,22 +649,26 @@
                     </widget>
                    </item>
                    <item row="3" column="1">
-                    <widget class="QComboBox" name="dilutionComboBox">
-                     <item>
-                      <property name="text">
-                       <string>None</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>1:1</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>1:2</string>
-                      </property>
-                     </item>
+                    <widget class="QComboBox" name="dilutionComboBox"/>
+                   </item>
+                   <item row="1" column="1" colspan="2">
+                    <widget class="QDateTimeEdit" name="dateTimeEdit">
+                     <property name="displayFormat">
+                      <string>yyyy-MM-dd HH:mm:ss</string>
+                     </property>
+                     <property name="calendarPopup">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QLineEdit" name="gyleLineEdit">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>0</height>
+                      </size>
+                     </property>
                     </widget>
                    </item>
                   </layout>
@@ -677,7 +692,7 @@
         <item>
          <layout class="QVBoxLayout" name="historyTabLayout">
           <item>
-           <widget class="QTableView" name="tableView"/>
+           <widget class="QTableView" name="historyTableView"/>
           </item>
           <item>
            <widget class="QGroupBox" name="groupBox_7">
@@ -746,55 +761,107 @@
        <layout class="QGridLayout" name="gridLayout_18">
         <item row="0" column="0" rowspan="2" colspan="3">
          <layout class="QGridLayout" name="gridLayout_11">
-          <item row="1" column="0" colspan="6">
+          <item row="1" column="0" colspan="7">
            <widget class="QGroupBox" name="BJCPStyleGroup">
             <property name="title">
              <string>BJCP Style</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_12">
-             <item row="0" column="0">
+             <item row="0" column="1">
               <layout class="QGridLayout" name="gridLayout_3">
-               <item row="1" column="1">
-                <widget class="QLabel" name="BJCPStyleMinimumColorLabel">
-                 <property name="text">
-                  <string>0.0</string>
+               <item row="1" column="3">
+                <widget class="QGroupBox" name="groupBox_13">
+                 <property name="title">
+                  <string>ABV</string>
                  </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 <layout class="QGridLayout" name="gridLayout_25">
+                  <item row="0" column="0">
+                   <layout class="QGridLayout" name="gridLayout_24">
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="BJCPStyleMinABV">
+                      <property name="text">
+                       <string>0.0</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QLabel" name="label_23">
+                      <property name="text">
+                       <string>to</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="2">
+                     <widget class="QLabel" name="BJCPStyleMaxABV">
+                      <property name="text">
+                       <string>99.9</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QGroupBox" name="groupBox_11">
+                 <property name="title">
+                  <string>OG</string>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_27">
+                  <item row="0" column="0">
+                   <layout class="QGridLayout" name="gridLayout_22">
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="BJCPStyleMinOG">
+                      <property name="text">
+                       <string>0.0</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QLabel" name="label_6">
+                      <property name="text">
+                       <string>to</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="2">
+                     <widget class="QLabel" name="BJCPStyleMaxOG">
+                      <property name="text">
+                       <string>99.9</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="0" column="3">
+                <widget class="QLabel" name="BJCPStyleLabel">
+                 <property name="text">
+                  <string>--</string>
                  </property>
                 </widget>
                </item>
                <item row="0" column="0" colspan="2">
-                <widget class="QComboBox" name="BJCPStyleComboBox"/>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="label_26">
-                 <property name="font">
-                  <font>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Color</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                <widget class="QComboBox" name="BJCPStyleComboBox">
+                 <property name="enabled">
+                  <bool>false</bool>
                  </property>
                 </widget>
-               </item>
-               <item row="0" column="4" colspan="2">
-                <spacer name="horizontalSpacer_2">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
                </item>
                <item row="0" column="2">
                 <widget class="QLabel" name="BJCPStyleNumberLabel">
@@ -812,45 +879,88 @@
                  </property>
                 </widget>
                </item>
-               <item row="0" column="3">
-                <widget class="QLabel" name="BJCPStyleLabel">
-                 <property name="text">
-                  <string>--</string>
+               <item row="1" column="0">
+                <widget class="QGroupBox" name="groupBox_8">
+                 <property name="title">
+                  <string>Color</string>
                  </property>
+                 <layout class="QGridLayout" name="gridLayout_21">
+                  <item row="0" column="0">
+                   <layout class="QGridLayout" name="gridLayout_20">
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="BJCPStyleMinimumColorLabel">
+                      <property name="text">
+                       <string>0.0</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QLabel" name="label_22">
+                      <property name="text">
+                       <string>to</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="2">
+                     <widget class="QLabel" name="BJCPStyleMaximumColorLabel">
+                      <property name="text">
+                       <string>99.99</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
                 </widget>
                </item>
                <item row="1" column="2">
-                <widget class="QLabel" name="label_22">
-                 <property name="text">
-                  <string>to</string>
+                <widget class="QGroupBox" name="groupBox_12">
+                 <property name="title">
+                  <string>FG</string>
                  </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
+                 <layout class="QGridLayout" name="gridLayout_26">
+                  <item row="0" column="0">
+                   <layout class="QGridLayout" name="gridLayout_23">
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="BJCPStyleMinFG">
+                      <property name="text">
+                       <string>0.0</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QLabel" name="label_19">
+                      <property name="text">
+                       <string>to</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="2">
+                     <widget class="QLabel" name="BJCPStyleMaxFG">
+                      <property name="text">
+                       <string>99.9</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
                 </widget>
-               </item>
-               <item row="1" column="3">
-                <widget class="QLabel" name="BJCPStyleMaximumColorLabel">
-                 <property name="text">
-                  <string>99.99</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <spacer name="verticalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
                </item>
               </layout>
              </item>
@@ -860,11 +970,11 @@
           <item row="0" column="0" colspan="4">
            <widget class="QComboBox" name="beerNameComboBox">
             <property name="editable">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
            </widget>
           </item>
-          <item row="2" column="0" colspan="6">
+          <item row="2" column="0" colspan="7">
            <widget class="QGroupBox" name="beerSpecGroup">
             <property name="title">
              <string>Beer Specifications</string>
@@ -881,24 +991,38 @@
                   <item row="0" column="0">
                    <layout class="QGridLayout" name="gridLayout_13">
                     <item row="1" column="0">
-                     <widget class="QLabel" name="label_20">
+                     <widget class="QLabel" name="maxColorLabel">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="text">
                        <string>Maximum</string>
                       </property>
                      </widget>
                     </item>
                     <item row="0" column="0">
-                     <widget class="QLabel" name="label_19">
+                     <widget class="QLabel" name="minColorLabel">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="text">
                        <string>Minimum</string>
                       </property>
                      </widget>
                     </item>
                     <item row="1" column="1">
-                     <widget class="QLineEdit" name="maxColorSpecLineEdit"/>
+                     <widget class="QLineEdit" name="maxColorSpecLineEdit">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
                     </item>
                     <item row="0" column="1">
-                     <widget class="QLineEdit" name="minColorSpecLineEdit"/>
+                     <widget class="QLineEdit" name="minColorSpecLineEdit">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
                     </item>
                    </layout>
                   </item>
@@ -914,24 +1038,38 @@
                   <item row="0" column="0">
                    <layout class="QGridLayout" name="gridLayout_15">
                     <item row="0" column="0">
-                     <widget class="QLabel" name="label_21">
+                     <widget class="QLabel" name="minTurbidityLabel">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="text">
                        <string>Minimum</string>
                       </property>
                      </widget>
                     </item>
                     <item row="1" column="0">
-                     <widget class="QLabel" name="label_23">
+                     <widget class="QLabel" name="maxTurbidityLabel">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="text">
                        <string>Maximum</string>
                       </property>
                      </widget>
                     </item>
                     <item row="0" column="1">
-                     <widget class="QLineEdit" name="minTurbiditySpecLineEdit"/>
+                     <widget class="QLineEdit" name="minTurbiditySpecLineEdit">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
                     </item>
                     <item row="1" column="1">
-                     <widget class="QLineEdit" name="maxTurbiditySpecLineEdit"/>
+                     <widget class="QLineEdit" name="maxTurbiditySpecLineEdit">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
                     </item>
                    </layout>
                   </item>
@@ -941,27 +1079,6 @@
               </layout>
              </item>
             </layout>
-           </widget>
-          </item>
-          <item row="3" column="5">
-           <widget class="QPushButton" name="savePortfolioItemPushButton">
-            <property name="text">
-             <string>Save</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="4">
-           <widget class="QPushButton" name="deletePortfolioItemPushButton">
-            <property name="text">
-             <string>Delete</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="3">
-           <widget class="QPushButton" name="pushButton_6">
-            <property name="text">
-             <string>Add</string>
-            </property>
            </widget>
           </item>
           <item row="3" column="0" colspan="3">
@@ -976,6 +1093,47 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item row="0" column="4">
+           <widget class="QPushButton" name="addPortfolioItemPushButton">
+            <property name="text">
+             <string>Add</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="5">
+           <widget class="QPushButton" name="editPortfolioItemPushButton">
+            <property name="text">
+             <string>Edit</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="6">
+           <widget class="QPushButton" name="deletePortfolioItemPushButton">
+            <property name="text">
+             <string>Delete</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="6">
+           <widget class="QPushButton" name="savePortfolioItemActionPushButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Save</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="5">
+           <widget class="QPushButton" name="cancelPortfolioItemActionPushButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Cancel</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -1265,26 +1423,35 @@
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>colorLineEdit</tabstop>
-  <tabstop>comboBox</tabstop>
+  <tabstop>colorMeasurementUnitComboBox</tabstop>
   <tabstop>turbidityLineEdit</tabstop>
-  <tabstop>comboBox_2</tabstop>
+  <tabstop>turbidityMeasurementUnitComboBox</tabstop>
   <tabstop>BJCPColorDescriptionLineEdit</tabstop>
   <tabstop>colorPreviewEdit</tabstop>
-  <tabstop>calibratePushButton</tabstop>
-  <tabstop>measurePushButton</tabstop>
   <tabstop>currentMeasurementPortfolioComboBox</tabstop>
-  <tabstop>lineEdit_3</tabstop>
-  <tabstop>dateEdit</tabstop>
-  <tabstop>lineEdit_4</tabstop>
+  <tabstop>gyleLineEdit</tabstop>
+  <tabstop>operatorLineEdit</tabstop>
   <tabstop>dilutionComboBox</tabstop>
-  <tabstop>pushButton_2</tabstop>
-  <tabstop>tableView</tabstop>
+  <tabstop>saveMeasurementPushButton</tabstop>
+  <tabstop>historyTableView</tabstop>
   <tabstop>lineEdit_5</tabstop>
   <tabstop>pushButton</tabstop>
   <tabstop>pushButton_3</tabstop>
@@ -1295,9 +1462,6 @@
   <tabstop>maxColorSpecLineEdit</tabstop>
   <tabstop>minTurbiditySpecLineEdit</tabstop>
   <tabstop>maxTurbiditySpecLineEdit</tabstop>
-  <tabstop>pushButton_6</tabstop>
-  <tabstop>deletePortfolioItemPushButton</tabstop>
-  <tabstop>savePortfolioItemPushButton</tabstop>
   <tabstop>serialPortCombo</tabstop>
   <tabstop>reloadSerialPortListButton</tabstop>
   <tabstop>connectPushButton</tabstop>

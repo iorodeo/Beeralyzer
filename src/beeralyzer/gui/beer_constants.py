@@ -24,6 +24,12 @@ BJCP_COLOR_DESCRIPTIONS = [[0,    2, '---'],
                            [35,  40, 'Black'],
                            [40, 100, 'Black, opaque']]
 
+COLOR_UNITS = {0: 'SRM', 1: 'EBC', 2: 'Absorbance'}
+
+TURBIDITY_UNITS = {0: 'Absorbance'}
+
+DILUTION_VALUES = {0: 'None', 1: '1:1', 2: '1:2'}
+
 SRM_TO_RGB = [[0.1, 250, 250, 210],
               [0.2, 250, 250, 204],
               [0.3, 250, 250, 199],

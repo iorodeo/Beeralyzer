@@ -27,6 +27,7 @@ class BeerPortfolio(object):
         database = shelve.open(PORTFOLIO_DATABASE_NAME)
         del database[name]
         database.close()
+        del self.portfolio[name]
     
     def list(self):
         return self.portfolio.keys()
