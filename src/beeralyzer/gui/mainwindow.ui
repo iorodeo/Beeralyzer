@@ -701,16 +701,6 @@
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_10">
              <item>
-              <widget class="QLabel" name="label_18">
-               <property name="text">
-                <string>Search:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEdit_5"/>
-             </item>
-             <item>
               <spacer name="horizontalSpacer_7">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -724,6 +714,13 @@
               </spacer>
              </item>
              <item>
+              <widget class="QPushButton" name="erasePushButton">
+               <property name="text">
+                <string>Erase</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="exportPushButton">
                <property name="text">
                 <string>Export</string>
@@ -731,14 +728,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_3">
-               <property name="text">
-                <string>Clear</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton_4">
+              <widget class="QPushButton" name="deletePushButton">
                <property name="text">
                 <string>Delete</string>
                </property>
@@ -1228,161 +1218,241 @@
          </layout>
         </item>
         <item>
-         <widget class="QGroupBox" name="groupBox">
-          <property name="title">
-           <string>Samples</string>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_8">
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_7">
-             <item>
-              <widget class="QLabel" name="label_17">
-               <property name="text">
-                <string>Number of samples</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="samplesLineEdit">
-               <property name="maximumSize">
-                <size>
-                 <width>100</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_28">
-               <property name="text">
-                <string>Significant digits</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="significantDigitsSpinBox">
-               <property name="buttonSymbols">
-                <enum>QAbstractSpinBox::UpDownArrows</enum>
-               </property>
-               <property name="minimum">
-                <number>1</number>
-               </property>
-               <property name="maximum">
-                <number>6</number>
-               </property>
-               <property name="value">
-                <number>4</number>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_4">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
+         <layout class="QHBoxLayout" name="horizontalLayout_27">
+          <item>
+           <widget class="QGroupBox" name="groupBox_29">
+            <property name="title">
+             <string>Samples</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_59">
+             <item row="0" column="0">
+              <layout class="QGridLayout" name="gridLayout_60">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_17">
+                 <property name="font">
+                  <font>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Samples per reading</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="samplesLineEdit">
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_28">
+                 <property name="font">
+                  <font>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Significant digits</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QSpinBox" name="significantDigitsSpinBox">
+                 <property name="buttonSymbols">
+                  <enum>QAbstractSpinBox::UpDownArrows</enum>
+                 </property>
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                 <property name="maximum">
+                  <number>6</number>
+                 </property>
+                 <property name="value">
+                  <number>4</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
             </layout>
-           </item>
-          </layout>
-         </widget>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="groupBox_30">
+            <property name="title">
+             <string>Look &amp;&amp; Feel</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_61">
+             <item row="0" column="0">
+              <layout class="QGridLayout" name="gridLayout_62">
+               <item row="0" column="2">
+                <widget class="QToolButton" name="fontButton">
+                 <property name="text">
+                  <string>...</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_47">
+                 <property name="font">
+                  <font>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>History Table Font</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="lineEdit">
+                 <property name="minimumSize">
+                  <size>
+                   <width>200</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QGroupBox" name="groupBox_4">
-          <property name="title">
-           <string>Units</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_7">
-           <item row="0" column="0">
-            <layout class="QGridLayout" name="gridLayout_6">
-             <item row="1" column="1">
-              <widget class="QComboBox" name="comboBox_5">
-               <item>
-                <property name="text">
-                 <string>NTU</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Absorbance</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QComboBox" name="comboBox_4">
-               <item>
-                <property name="text">
-                 <string>SRM</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>EBC</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Absorbance</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_16">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Turbidity</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
+         <layout class="QHBoxLayout" name="horizontalLayout_12">
+          <item>
+           <widget class="QGroupBox" name="groupBox_14">
+            <property name="title">
+             <string>Units</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_29">
              <item row="0" column="0">
-              <widget class="QLabel" name="label_15">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Color</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
-              <spacer name="horizontalSpacer_6">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
+              <layout class="QGridLayout" name="gridLayout_6">
+               <item row="1" column="1">
+                <widget class="QComboBox" name="comboBox_5">
+                 <item>
+                  <property name="text">
+                   <string>NTU</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Absorbance</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QComboBox" name="comboBox_4">
+                 <item>
+                  <property name="text">
+                   <string>SRM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>EBC</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Absorbance</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_16">
+                 <property name="font">
+                  <font>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Turbidity</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_15">
+                 <property name="font">
+                  <font>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Color</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
             </layout>
-           </item>
-          </layout>
-         </widget>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="groupBox_15">
+            <property name="title">
+             <string>Confirmations</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_31">
+             <item row="0" column="0">
+              <layout class="QGridLayout" name="gridLayout_30">
+               <item row="0" column="0">
+                <widget class="QCheckBox" name="confirmOnExitCheckbox">
+                 <property name="text">
+                  <string>On Exit</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QCheckBox" name="confirmOnHistoryDeleteCheckbox">
+                 <property name="text">
+                  <string>On History Item Delete</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QCheckBox" name="confirmOnRecalibrateCheckbox">
+                 <property name="text">
+                  <string>On recalibrate</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -1452,10 +1522,8 @@
   <tabstop>dilutionComboBox</tabstop>
   <tabstop>saveMeasurementPushButton</tabstop>
   <tabstop>historyTableView</tabstop>
-  <tabstop>lineEdit_5</tabstop>
   <tabstop>exportPushButton</tabstop>
-  <tabstop>pushButton_3</tabstop>
-  <tabstop>pushButton_4</tabstop>
+  <tabstop>deletePushButton</tabstop>
   <tabstop>beerNameComboBox</tabstop>
   <tabstop>BJCPStyleComboBox</tabstop>
   <tabstop>minColorSpecLineEdit</tabstop>
@@ -1466,8 +1534,6 @@
   <tabstop>reloadSerialPortListButton</tabstop>
   <tabstop>connectPushButton</tabstop>
   <tabstop>autoConnectCheckBox</tabstop>
-  <tabstop>samplesLineEdit</tabstop>
-  <tabstop>significantDigitsSpinBox</tabstop>
   <tabstop>comboBox_4</tabstop>
   <tabstop>comboBox_5</tabstop>
   <tabstop>saveConfigPushButton</tabstop>

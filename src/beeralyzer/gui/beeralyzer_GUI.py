@@ -114,6 +114,9 @@ class beeralyzerGui(QtGui.QMainWindow):
         if self.config.load():
             self.significantDigitsSpinBox.setValue(self.config.significantDigits)
             self.autoConnectCheckBox.setChecked(self.config.autoConnect)
+            self.confirmOnExitCheckbox.setChecked(self.config.confirmOnExit)
+            self.confirmOnRecalibrateCheckbox.setChecked(self.config.confirmOnRecal)
+            self.confirmOnHistoryDeleteCheckbox.setChecked(self.config.confirmOnDeleteHistory)
             index = self.serialPortCombo.findText(self.config.serialPortName)
             if index != -1:
                 self.serialPortCombo.setCurrentIndex(index)
@@ -149,6 +152,7 @@ class beeralyzerGui(QtGui.QMainWindow):
         hh = self.historyTableView.horizontalHeader()
         hh.setStretchLastSection(True)
         self.historyTableView.setSortingEnabled(True)   
+        self.historyTableView.resizeColumnsToContents()
         
     def updatePortfolioInfo_Callback(self):
         currentPortfolioName = self.beerNameComboBox.currentText()
@@ -213,6 +217,7 @@ class beeralyzerGui(QtGui.QMainWindow):
         
         self.saveMeasurementPushButton.clicked.connect(self.saveMeasurement)
         self.exportPushButton.clicked.connect(self.exportToCSV)
+        self.deletePushButton.clicked.connect(self.deleteSelectedHistoryRows)
         
     def reloadSerialPortListClicked_Callback(self):
         self.serialPortCombo.clear()
@@ -373,6 +378,9 @@ class beeralyzerGui(QtGui.QMainWindow):
         self.config.setPortName(self.serialPortCombo.currentText())
         self.config.setAutoConnect(self.autoConnectCheckBox.isChecked())
         self.config.setSignificantDigits(self.significantDigitsSpinBox.value())
+        self.config.setConfirmOnExit(self.confirmOnExitCheckbox.isChecked())
+        self.config.setConfirmOnDeleteHistory(self.confirmOnHistoryDeleteCheckbox.isChecked())
+        self.config.setConfirmOnRecal(self.confirmOnRecalibrateCheckbox.isChecked())
         self.config.save()
       
     def addPortfolioItem_Clicked(self):
@@ -434,32 +442,50 @@ class beeralyzerGui(QtGui.QMainWindow):
         AboutWindow(self).exec_()
     
     def saveMeasurement(self):
+        style = str(self.currentMeasurementPortfolioComboBox.currentText())
+        colorUnits = str(self.colorMeasurementUnitComboBox.currentText())
+        turbidityUnits = str(self.turbidityMeasurementUnitComboBox.currentText())
+
+        try:
+            color = float(self.colorLineEdit.text())          
+        except ValueError:
+            color = 0.0            
+ 
+        try:
+            turbidity = float(self.turbidityLineEdit.text())
+        except ValueError:
+            turbidity = 0.0
+       
+        dateTime = str(self.dateTimeEdit.dateTime().toPyDateTime().strftime("%Y-%m-%d %H:%M:%S"))
+        
         record = BeeralyzerHistoryRecord()
         record.setDate(self.dateTimeEdit.date().toPyDate())
         record.setTime(self.dateTimeEdit.time().toPyTime())
         record.setOperator(str(self.operatorLineEdit.text()))
         record.setGyle(str(self.gyleLineEdit.text()))
-        record.setSample(str(self.currentMeasurementPortfolioComboBox.currentText()))
+        record.setSample(style)
         record.setDilution(str(self.dilutionComboBox.currentText()))
-        record.setColorUnits(str(self.colorMeasurementUnitComboBox.currentText()))
-        record.setTurbidityUnits(str(self.turbidityMeasurementUnitComboBox.currentText()))
+        record.setColorUnits(colorUnits)
+        record.setTurbidityUnits(turbidityUnits)
         record.setMinColor(float(self.currentMinColorSpecLabel.text()))
         record.setMaxColor(float(self.currentMaxColorSpecLabel.text()))
         record.setMinTurbidity(float(self.currentMinTurbiditySpecLabel.text()))
         record.setMaxTurbidity(float(self.currentMaxTurbiditySpecLabel.text()))
         
-        try:
-            record.setColor(float(self.colorLineEdit.text()))            
-        except ValueError:
-            record.setColor(0.0)            
- 
-        try:
-            record.setTurbidity(float(self.turbidityLineEdit.text()))
-        except ValueError:
-            record.setTurbidity(0.0)
+        record.setColor(color)            
+        record.setTurbidity(turbidity)
               
         self.history.add(record) 
         self.tablemodel.append(record.toList())   
+
+        self.portfolio.updateLastMeasurement(style, 
+                                             color, 
+                                             colorUnits, 
+                                             turbidity, 
+                                             turbidityUnits, 
+                                             dateTime)
+        
+        self.loadPortfolioData()
 
     def exportToCSV(self):
         path = QtGui.QFileDialog.getSaveFileName(self, 'Save File', '', 'CSV(*.csv)')
@@ -475,6 +501,16 @@ class beeralyzerGui(QtGui.QMainWindow):
                         else:
                             rowdata.append('')
                     writer.writerow(rowdata)
+
+    def deleteSelectedHistoryRows(self):
+        count = 0
+        first = -1
+        for modelIndex in self.historyTableView.selectionModel().selectedRows():
+            if first == -1:
+                first = modelIndex.row()
+            count = count + 1
+        deletedKeys = self.tablemodel.removeRows(first, count, self.historyTableView.selectionModel().currentIndex())
+        self.history.deleteKeys(deletedKeys)
                 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

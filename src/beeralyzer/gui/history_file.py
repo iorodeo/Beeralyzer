@@ -33,3 +33,12 @@ class HistoryFile(object):
         
         return result
         
+    def deleteKeys(self, keys):
+
+        database = shelve.open(HISTORY_DATABASE_NAME)
+        
+        for name in keys:
+            del database[name]
+            del self.history[name]    
+                       
+        database.close()

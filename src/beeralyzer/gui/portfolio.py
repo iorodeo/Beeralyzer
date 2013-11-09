@@ -35,3 +35,15 @@ class BeerPortfolio(object):
     def get(self, key):
         item = self.portfolio.get(key)
         return item
+    
+    def updateLastMeasurement(self, name, color, colorUnits, turbidity, turbidityUnits, dateUpdated):
+                
+        database = shelve.open(PORTFOLIO_DATABASE_NAME)
+        item = database[name]
+        item.lastMeasuredValues = str(color) + ' ' + colorUnits + ' , ' + str(turbidity) + ' ' + turbidityUnits
+        item.lastMeasurementDate = dateUpdated
+        database[name] = item
+        database.close()
+        self.portfolio[name] = item
+
+        
