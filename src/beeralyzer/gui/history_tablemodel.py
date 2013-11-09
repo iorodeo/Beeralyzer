@@ -22,10 +22,10 @@ class BeeralyzerTableModel(QAbstractTableModel):
         record = BeeralyzerHistoryRecord()
         self.headerdata = record.getDescriptions()
 
-    def rowCount(self, parent): 
+    def rowCount(self, parent=None): 
         return len(self.arraydata) 
  
-    def columnCount(self, parent): 
+    def columnCount(self, parent=None): 
         return len(self.headerdata) 
  
     def data(self, index, role): 
@@ -58,4 +58,6 @@ class BeeralyzerTableModel(QAbstractTableModel):
     def append(self, row):
         self.arraydata.append(row)
         self.emit(SIGNAL("layoutChanged()"))
-        
+    
+    def item(self, row, column):
+        return self.arraydata[row][column]

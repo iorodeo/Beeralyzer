@@ -724,7 +724,7 @@
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton">
+              <widget class="QPushButton" name="exportPushButton">
                <property name="text">
                 <string>Export</string>
                </property>
@@ -1453,7 +1453,7 @@
   <tabstop>saveMeasurementPushButton</tabstop>
   <tabstop>historyTableView</tabstop>
   <tabstop>lineEdit_5</tabstop>
-  <tabstop>pushButton</tabstop>
+  <tabstop>exportPushButton</tabstop>
   <tabstop>pushButton_3</tabstop>
   <tabstop>pushButton_4</tabstop>
   <tabstop>beerNameComboBox</tabstop>

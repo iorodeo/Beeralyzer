@@ -5,6 +5,7 @@ Created on Oct 26, 2013
 '''
 import platform
 import sys
+import csv
 
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtGui import QFont
@@ -211,6 +212,7 @@ class beeralyzerGui(QtGui.QMainWindow):
         self.actionAbout.triggered.connect(self.about_Callback)
         
         self.saveMeasurementPushButton.clicked.connect(self.saveMeasurement)
+        self.exportPushButton.clicked.connect(self.exportToCSV)
         
     def reloadSerialPortListClicked_Callback(self):
         self.serialPortCombo.clear()
@@ -458,6 +460,21 @@ class beeralyzerGui(QtGui.QMainWindow):
               
         self.history.add(record) 
         self.tablemodel.append(record.toList())   
+
+    def exportToCSV(self):
+        path = QtGui.QFileDialog.getSaveFileName(self, 'Save File', '', 'CSV(*.csv)')
+        if not path.isEmpty():
+            with open(unicode(path), 'wb') as stream:
+                writer = csv.writer(stream)
+                for row in range(self.tablemodel.rowCount()):
+                    rowdata = []
+                    for column in range(self.tablemodel.columnCount()):
+                        item = self.tablemodel.item(row, column)
+                        if item is not None:
+                            rowdata.append(item)
+                        else:
+                            rowdata.append('')
+                    writer.writerow(rowdata)
                 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
