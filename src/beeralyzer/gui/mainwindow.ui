@@ -281,7 +281,7 @@
               </widget>
              </item>
              <item row="0" column="2">
-              <widget class="QComboBox" name="colorMeasurementUnitComboBox">
+              <widget class="QComboBox" name="colorMeasurementUnitCombobox">
                <property name="minimumSize">
                 <size>
                  <width>120</width>
@@ -627,6 +627,9 @@
                    </item>
                    <item row="3" column="2">
                     <widget class="QPushButton" name="saveMeasurementPushButton">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
                      <property name="font">
                       <font>
                        <weight>75</weight>
@@ -649,7 +652,7 @@
                     </widget>
                    </item>
                    <item row="3" column="1">
-                    <widget class="QComboBox" name="dilutionComboBox"/>
+                    <widget class="QComboBox" name="dilutionCombobox"/>
                    </item>
                    <item row="1" column="1" colspan="2">
                     <widget class="QDateTimeEdit" name="dateTimeEdit">
@@ -1014,6 +1017,24 @@
                       </property>
                      </widget>
                     </item>
+                    <item row="0" column="2">
+                     <widget class="QComboBox" name="comboBox_2">
+                      <item>
+                       <property name="text">
+                        <string>SRM</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
+                    <item row="1" column="2">
+                     <widget class="QComboBox" name="comboBox_3">
+                      <item>
+                       <property name="text">
+                        <string>SRM</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
                    </layout>
                   </item>
                  </layout>
@@ -1027,16 +1048,6 @@
                  <layout class="QGridLayout" name="gridLayout_17">
                   <item row="0" column="0">
                    <layout class="QGridLayout" name="gridLayout_15">
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="minTurbidityLabel">
-                      <property name="enabled">
-                       <bool>false</bool>
-                      </property>
-                      <property name="text">
-                       <string>Minimum</string>
-                      </property>
-                     </widget>
-                    </item>
                     <item row="1" column="0">
                      <widget class="QLabel" name="maxTurbidityLabel">
                       <property name="enabled">
@@ -1044,6 +1055,16 @@
                       </property>
                       <property name="text">
                        <string>Maximum</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="minTurbidityLabel">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="text">
+                       <string>Minimum</string>
                       </property>
                      </widget>
                     </item>
@@ -1059,6 +1080,24 @@
                       <property name="enabled">
                        <bool>false</bool>
                       </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="2">
+                     <widget class="QComboBox" name="comboBox_4">
+                      <item>
+                       <property name="text">
+                        <string>Absorbance</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
+                    <item row="1" column="2">
+                     <widget class="QComboBox" name="comboBox_5">
+                      <item>
+                       <property name="text">
+                        <string>Absorbance</string>
+                       </property>
+                      </item>
                      </widget>
                     </item>
                    </layout>
@@ -1204,7 +1243,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QCheckBox" name="autoConnectCheckBox">
+                <widget class="QCheckBox" name="autoConnectCheckbox">
                  <property name="text">
                   <string>Auto-connect at startup</string>
                  </property>
@@ -1322,13 +1361,41 @@
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QLineEdit" name="lineEdit">
+                <widget class="QLineEdit" name="fontLineEdit">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
                  <property name="minimumSize">
                   <size>
                    <width>200</width>
                    <height>0</height>
                   </size>
                  </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_48">
+                 <property name="font">
+                  <font>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Language</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1" colspan="2">
+                <widget class="QComboBox" name="comboBox">
+                 <item>
+                  <property name="text">
+                   <string>English (US)</string>
+                  </property>
+                 </item>
                 </widget>
                </item>
               </layout>
@@ -1343,43 +1410,16 @@
           <item>
            <widget class="QGroupBox" name="groupBox_14">
             <property name="title">
-             <string>Units</string>
+             <string>Default Units</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_29">
              <item row="0" column="0">
               <layout class="QGridLayout" name="gridLayout_6">
                <item row="1" column="1">
-                <widget class="QComboBox" name="comboBox_5">
-                 <item>
-                  <property name="text">
-                   <string>NTU</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Absorbance</string>
-                  </property>
-                 </item>
-                </widget>
+                <widget class="QComboBox" name="defaultTurbidityUnitsCombobox"/>
                </item>
                <item row="0" column="1">
-                <widget class="QComboBox" name="comboBox_4">
-                 <item>
-                  <property name="text">
-                   <string>SRM</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>EBC</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Absorbance</string>
-                  </property>
-                 </item>
-                </widget>
+                <widget class="QComboBox" name="defaultColorUnitsCombobox"/>
                </item>
                <item row="1" column="0">
                 <widget class="QLabel" name="label_16">
@@ -1471,6 +1511,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="saveConfigPushButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Save</string>
             </property>
@@ -1511,7 +1554,7 @@
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>colorLineEdit</tabstop>
-  <tabstop>colorMeasurementUnitComboBox</tabstop>
+  <tabstop>colorMeasurementUnitCombobox</tabstop>
   <tabstop>turbidityLineEdit</tabstop>
   <tabstop>turbidityMeasurementUnitComboBox</tabstop>
   <tabstop>BJCPColorDescriptionLineEdit</tabstop>
@@ -1519,7 +1562,7 @@
   <tabstop>currentMeasurementPortfolioComboBox</tabstop>
   <tabstop>gyleLineEdit</tabstop>
   <tabstop>operatorLineEdit</tabstop>
-  <tabstop>dilutionComboBox</tabstop>
+  <tabstop>dilutionCombobox</tabstop>
   <tabstop>saveMeasurementPushButton</tabstop>
   <tabstop>historyTableView</tabstop>
   <tabstop>exportPushButton</tabstop>
@@ -1533,9 +1576,9 @@
   <tabstop>serialPortCombo</tabstop>
   <tabstop>reloadSerialPortListButton</tabstop>
   <tabstop>connectPushButton</tabstop>
-  <tabstop>autoConnectCheckBox</tabstop>
-  <tabstop>comboBox_4</tabstop>
-  <tabstop>comboBox_5</tabstop>
+  <tabstop>autoConnectCheckbox</tabstop>
+  <tabstop>defaultColorUnitsCombobox</tabstop>
+  <tabstop>defaultTurbidityUnitsCombobox</tabstop>
   <tabstop>saveConfigPushButton</tabstop>
  </tabstops>
  <resources/>

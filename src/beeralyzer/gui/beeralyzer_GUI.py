@@ -5,14 +5,14 @@ Created on Oct 26, 2013
 '''
 import platform
 import sys
-import csv
 
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtGui import QFont
+from PyQt4.QtGui import QFontDialog
+from PyQt4.QtGui import QDoubleValidator
 from colorimeter.colorimeter_serial import Colorimeter
 import colorimeter.constants
 from numpy import recfromcsv
-import numpy.random
 
 from about_gui import AboutWindow
 from beer_constants import COLOR_UNITS, DILUTION_VALUES, TURBIDITY_UNITS
@@ -23,38 +23,40 @@ from history_record import BeeralyzerHistoryRecord
 from history_tablemodel import BeeralyzerTableModel
 from portfolio import BeerPortfolio
 
-DEBUG = False
-
-class beeralyzerGui(QtGui.QMainWindow):
+class BeeralyzerGui(QtGui.QMainWindow):
     
     config = BeeralyzerConfigFile()
     
     def __init__(self, parent=None):
-        super(beeralyzerGui,self).__init__(parent)
+        super(BeeralyzerGui,self).__init__(parent)
         QtGui.QMainWindow.__init__(self)
         self.ui = uic.loadUi("mainwindow.ui", self)
 
         self.portfolio = BeerPortfolio()        
-        
+        self.beeralyzer = Beeralyzer()
+
         self.connectActions()
         self.initialize()
         self.updateWidgetEnabled()
-        self.beeralyzer = Beeralyzer()
         self.center()
         self.show()
     
     def closeEvent(self, event):
-        title = "Message"
-        message = "Do you really want to quit?"
-        reply = QtGui.QMessageBox.question(self, title, message, QtGui.QMessageBox.Yes | 
-            QtGui.QMessageBox.No, QtGui.QMessageBox.No)
-        if reply == QtGui.QMessageBox.Yes:
-            event.accept()
+        if self.config.confirmOnExit:
+            title = "Message"
+            message = "Do you really want to quit?"
+            reply = QtGui.QMessageBox.question(self, title, message, QtGui.QMessageBox.Yes | 
+                QtGui.QMessageBox.No, QtGui.QMessageBox.No)
+            if reply == QtGui.QMessageBox.Yes:
+                event.accept()
+                if not self.dev is None:
+                    self.disconnectDevice()
+            else:
+                event.ignore()  
+        else:
             if not self.dev is None:
                 self.disconnectDevice()
-        else:
-            event.ignore()  
-
+           
     def center(self):
         qr = self.frameGeometry()
         cp = QtGui.QDesktopWidget().availableGeometry().center()
@@ -71,15 +73,25 @@ class beeralyzerGui(QtGui.QMainWindow):
         
         self.a430 = 0.0
         self.a700 = 0.0
-
+        
+        self.historTableFontFamily = "Courier New"
+        self.historyTableFontSize = 10
+        
         self.statusbar.showMessage('Not Connected')
         
+        self.minColorSpecLineEdit.setValidator(QDoubleValidator())
+        self.maxColorSpecLineEdit.setValidator(QDoubleValidator())
+        self.minTurbiditySpecLineEdit.setValidator(QDoubleValidator())
+        self.maxTurbiditySpecLineEdit.setValidator(QDoubleValidator())
+        
         self.populateSerialPortComboBox()
+        self.populateMeasurementUnits()
         self.loadConfiguration() 
         self.loadPortfolioData()   
         self.loadBJCPData()   
-        self.populateMeasurementUnits()
         self.loadHistoryData()
+        self.saveConfigPushButton.setEnabled(False)
+        self.configurationChanged = False
             
     def populateSerialPortComboBox(self):
         try:
@@ -100,28 +112,48 @@ class beeralyzerGui(QtGui.QMainWindow):
             self.port = colorimeter.constants.DFLT_PORT_WINDOWS 
 
     def populateMeasurementUnits(self):
-        self.colorMeasurementUnitComboBox.clear()
+        self.colorMeasurementUnitCombobox.clear()
         self.turbidityMeasurementUnitComboBox.clear()
-        self.dilutionComboBox.clear()
+        self.dilutionCombobox.clear()
+        self.defaultColorUnitsCombobox.clear()
+        self.defaultTurbidityUnitsCombobox.clear()
+
         for value in COLOR_UNITS.itervalues():
-            self.colorMeasurementUnitComboBox.addItem(value)
+            self.colorMeasurementUnitCombobox.addItem(value)
+            self.defaultColorUnitsCombobox.addItem(value)
         for value in TURBIDITY_UNITS.itervalues():
             self.turbidityMeasurementUnitComboBox.addItem(value)
+            self.defaultTurbidityUnitsCombobox.addItem(value)
         for value in DILUTION_VALUES.itervalues():
-            self.dilutionComboBox.addItem(value)
+            self.dilutionCombobox.addItem(value)
 
     def loadConfiguration(self):
         if self.config.load():
             self.significantDigitsSpinBox.setValue(self.config.significantDigits)
-            self.autoConnectCheckBox.setChecked(self.config.autoConnect)
+            self.autoConnectCheckbox.setChecked(self.config.autoConnect)
+
             self.confirmOnExitCheckbox.setChecked(self.config.confirmOnExit)
             self.confirmOnRecalibrateCheckbox.setChecked(self.config.confirmOnRecal)
             self.confirmOnHistoryDeleteCheckbox.setChecked(self.config.confirmOnDeleteHistory)
+            
+            self.historTableFontFamily = self.config.historyFontFamily
+            self.historTableFontSize = self.config.historyFontSize
+            
             index = self.serialPortCombo.findText(self.config.serialPortName)
             if index != -1:
                 self.serialPortCombo.setCurrentIndex(index)
                 if self.config.autoConnect:
                     self.connectDevice()
+
+            index = self.defaultColorUnitsCombobox.findText(self.config.defaultColorUnits)
+            if index != -1:
+                self.defaultColorUnitsCombobox.setCurrentIndex(index)
+                self.colorMeasurementUnitCombobox.setCurrentIndex(index)
+
+            index = self.defaultTurbidityUnitsCombobox.findText(self.config.defaultTurbidityUnits)
+            if index != -1:
+                self.defaultTurbidityUnitsCombobox.setCurrentIndex(index)
+                self.turbidityMeasurementUnitComboBox.setCurrentIndex(index)
 
     def loadPortfolioData(self):
         portfolioNameList = self.portfolio.list()
@@ -138,14 +170,14 @@ class beeralyzerGui(QtGui.QMainWindow):
         for BJCPStyle in self.BJCPData.style:
             self.BJCPStyleComboBox.addItem(BJCPStyle)
          
-    def loadHistoryData(self):
-        
+    def loadHistoryData(self):      
         tabledata = self.history.toList()   
         self.tablemodel = BeeralyzerTableModel(tabledata)
         self.historyTableView.setModel(self.tablemodel)
         self.historyTableView.setShowGrid(True)
 
-        font = QFont("Courier New", 10)
+        font = QFont(self.historTableFontFamily, self.historTableFontSize)
+        self.displayHistoryTableFont(font.family(), font.pointSize())
         self.historyTableView.setFont(font)
         vh = self.historyTableView.verticalHeader()
         vh.setVisible(True)
@@ -153,7 +185,56 @@ class beeralyzerGui(QtGui.QMainWindow):
         hh.setStretchLastSection(True)
         self.historyTableView.setSortingEnabled(True)   
         self.historyTableView.resizeColumnsToContents()
+
+    def connectActions(self):
+        self.serialPortCombo.editTextChanged.connect(self.portChanged_Callback)
+        self.connectPushButton.pressed.connect(self.connectPressed_Callback)
+        self.connectPushButton.clicked.connect(self.connectClicked_Callback)
+
+        self.calibratePushButton.pressed.connect(self.calibratePressed_Callback)
+        self.calibratePushButton.clicked.connect(self.calibrateClicked_Callback)
+        self.measurePushButton.clicked.connect(self.measureClicked_Callback)
+        self.measurePushButton.pressed.connect(self.measurePressed_Callback)
+
+        self.reloadSerialPortListButton.clicked.connect(self.reloadSerialPortListClicked_Callback)
         
+        self.saveConfigPushButton.clicked.connect(self.saveConfigClicked_Callback)
+        self.editPortfolioItemPushButton.clicked.connect(self.editPortfolioItemClicked_Callback)
+        self.deletePortfolioItemPushButton.clicked.connect(self.deletePortfolioItemClicked_Callback)
+        
+        self.beerNameComboBox.currentIndexChanged.connect(self.updatePortfolioInfo_Callback)
+        self.currentMeasurementPortfolioComboBox.currentIndexChanged.connect(self.updateSelectedMeasurementPortfolioInfo_Callback)
+        self.BJCPStyleComboBox.currentIndexChanged.connect(self.updateSelectedBJCPStyle_Callback)
+        
+        self.savePortfolioItemActionPushButton.clicked.connect(self.savePortfolioItemAction_Clicked)
+        self.cancelPortfolioItemActionPushButton.clicked.connect(self.cancelPortfolioItemAction_Clicked)
+        self.addPortfolioItemPushButton.clicked.connect(self.addPortfolioItem_Clicked)
+        self.actionAbout.triggered.connect(self.about_Callback)
+        
+        self.saveMeasurementPushButton.clicked.connect(self.saveMeasurement_Callback)
+        self.exportPushButton.clicked.connect(self.exportToCSV_Callback)
+        self.deletePushButton.clicked.connect(self.deleteSelectedHistoryRows_Callback)
+        self.erasePushButton.clicked.connect(self.eraseAllHistoryRows_Callback)
+        
+        self.fontButton.clicked.connect(self.changeFont_Callback)
+        
+        self.serialPortCombo.editTextChanged.connect(self.configWidgetChanged_Callback)
+        self.significantDigitsSpinBox.valueChanged.connect(self.configWidgetChanged_Callback)
+        self.fontLineEdit.textChanged.connect(self.configWidgetChanged_Callback)
+        self.defaultColorUnitsCombobox.currentIndexChanged.connect(self.configWidgetChanged_Callback)
+        self.defaultTurbidityUnitsCombobox.currentIndexChanged.connect(self.configWidgetChanged_Callback)
+        self.confirmOnExitCheckbox.stateChanged.connect(self.configWidgetChanged_Callback)
+        self.confirmOnRecalibrateCheckbox.stateChanged.connect(self.configWidgetChanged_Callback)
+        self.confirmOnHistoryDeleteCheckbox.stateChanged.connect(self.configWidgetChanged_Callback)
+        self.autoConnectCheckbox.stateChanged.connect(self.configWidgetChanged_Callback)
+        
+        self.colorMeasurementUnitCombobox.currentIndexChanged.connect(self.displayMeasurements)
+        self.dilutionCombobox.currentIndexChanged.connect(self.displayMeasurements)
+               
+    def configWidgetChanged_Callback(self):
+        self.saveConfigPushButton.setEnabled(True)
+        self.configurationChanged = True
+    
     def updatePortfolioInfo_Callback(self):
         currentPortfolioName = self.beerNameComboBox.currentText()
         selectedItem = self.portfolio.get(str(currentPortfolioName))
@@ -190,60 +271,9 @@ class beeralyzerGui(QtGui.QMainWindow):
         self.BJCPStyleMaxABV.setText(str(currentSelection.abvmax[0]))
         self.BJCPStyleLabel.setText(str(currentSelection.category[0]))
 
-    def connectActions(self):
-        self.serialPortCombo.editTextChanged.connect(self.portChanged_Callback)
-        self.connectPushButton.pressed.connect(self.connectPressed_Callback)
-        self.connectPushButton.clicked.connect(self.connectClicked_Callback)
-
-        self.calibratePushButton.pressed.connect(self.calibratePressed_Callback)
-        self.calibratePushButton.clicked.connect(self.calibrateClicked_Callback)
-        self.measurePushButton.clicked.connect(self.measureClicked_Callback)
-        self.measurePushButton.pressed.connect(self.measurePressed_Callback)
-
-        self.reloadSerialPortListButton.clicked.connect(self.reloadSerialPortListClicked_Callback)
-        
-        self.saveConfigPushButton.clicked.connect(self.saveConfigClicked_Callback)
-        self.editPortfolioItemPushButton.clicked.connect(self.editPortfolioItemClicked_Callback)
-        self.deletePortfolioItemPushButton.clicked.connect(self.deletePortfolioItemClicked_Callback)
-        
-        self.beerNameComboBox.currentIndexChanged.connect(self.updatePortfolioInfo_Callback)
-        self.currentMeasurementPortfolioComboBox.currentIndexChanged.connect(self.updateSelectedMeasurementPortfolioInfo_Callback)
-        self.BJCPStyleComboBox.currentIndexChanged.connect(self.updateSelectedBJCPStyle_Callback)
-        
-        self.savePortfolioItemActionPushButton.clicked.connect(self.savePortfolioItemAction_Clicked)
-        self.cancelPortfolioItemActionPushButton.clicked.connect(self.cancelPortfolioItemAction_Clicked)
-        self.addPortfolioItemPushButton.clicked.connect(self.addPortfolioItem_Clicked)
-        self.actionAbout.triggered.connect(self.about_Callback)
-        
-        self.saveMeasurementPushButton.clicked.connect(self.saveMeasurement)
-        self.exportPushButton.clicked.connect(self.exportToCSV)
-        self.deletePushButton.clicked.connect(self.deleteSelectedHistoryRows)
-        
     def reloadSerialPortListClicked_Callback(self):
         self.serialPortCombo.clear()
         self.populateSerialPortComboBox()
-
-    def getMeasurement(self):
-        
-        if DEBUG:
-            self.a430 = numpy.random.random()
-            self.a700 = numpy.random.random()
-            return
-        
-        error = False
-        try:
-            srmAbso = self.dev.getMeasurementBlue()[2]
-            turbidityAbso = self.dev.getMeasurementGreen()[2]
-        except IOError: 
-            msgTitle = 'Measurement Error:'
-            msgText = 'unable to get measurement'
-            QtGui.QMessageBox.warning(self,msgTitle, msgText)
-            error = True
-        if error:
-            self.a430 = self.a700 = None
-        else:
-            self.a430 = srmAbso
-            self.a700 = turbidityAbso
 
     def connectPressed_Callback(self):
         if self.dev is None:
@@ -282,14 +312,27 @@ class beeralyzerGui(QtGui.QMainWindow):
         self.samplesLineEdit.setText('')
 
     def cleanUpAndCloseDevice(self):
-        if not colorimeter.constants.DEVEL_FAKE_MEASURE:    
-            self.dev.close()
+        self.dev.close()
         self.dev = None
 
+    def getMeasurement(self):        
+        error = False
+        try:
+            srmAbso = self.dev.getMeasurementBlue()[2]
+            turbidityAbso = self.dev.getMeasurementGreen()[2]
+        except IOError: 
+            msgTitle = 'Measurement Error:'
+            msgText = 'unable to get measurement'
+            QtGui.QMessageBox.warning(self,msgTitle, msgText)
+            error = True
+        if error:
+            self.a430 = self.a700 = None
+        else:
+            self.a430 = srmAbso
+            self.a700 = turbidityAbso
+            self.saveMeasurementPushButton.setEnabled(True)
+
     def updateWidgetEnabled(self):
-        
-        if DEBUG:
-            return
         
         if self.dev is None:
             self.connectPushButton.setText('Connect')
@@ -314,15 +357,14 @@ class beeralyzerGui(QtGui.QMainWindow):
         self.statusbar.showMessage('Connected, Calibrating...')
 
     def calibrateClicked_Callback(self):
-        if self.isCalibrated:
+        if self.isCalibrated and self.config.confirmOnRecal:
             title = 'Please confirm'
             message = 'Beeralyzer is already calibrated. Recalibrate?'
             reply = QtGui.QMessageBox.question(self, title, message, QtGui.QMessageBox.Yes | 
                                                QtGui.QMessageBox.No, QtGui.QMessageBox.No)
             if reply == QtGui.QMessageBox.No:
                 self.updateWidgetEnabled()
-                return
-        
+                return     
         try:
             self.dev.calibrateBlue()
             self.dev.calibrateGreen()
@@ -342,19 +384,26 @@ class beeralyzerGui(QtGui.QMainWindow):
         self.getMeasurement()
         self.displayMeasurements()
         self.updateWidgetEnabled()       
+        self.dateTimeEdit.setDateTime(QtCore.QDateTime.currentDateTime())
 
     def floatToString(self, floatValue):
         return '{value:1.{digits}f}'.format(value=floatValue,digits=self.significantDigitsSpinBox.value())
           
     def displayMeasurements(self):
-        dilutionRatio = self.beeralyzer.getDilutionValue(self.dilutionComboBox.currentText())
-        srmValue = self.beeralyzer.getSRM(self.a430, dilutionRatio)
-        self.colorLineEdit.setText(self.floatToString(srmValue))
+        dilutionRatio = self.beeralyzer.getDilutionValue(self.dilutionCombobox.currentText())
+        srmValue = self.beeralyzer.getSRM(self.a430, dilutionRatio)  
         self.turbidityLineEdit.setText(self.floatToString(self.a700))
         self.setColorTextColor(self.a430, self.a700)
         self.setBeerColorPreview(srmValue)
         self.setBeerColorDescription(srmValue)
-        self.dateTimeEdit.setDateTime(QtCore.QDateTime.currentDateTime())
+        
+        self.colorLineEdit.setText(self.floatToString(srmValue))
+        if self.colorMeasurementUnitCombobox.currentText() == COLOR_UNITS[0]:
+            self.colorLineEdit.setText(self.floatToString(srmValue))
+        elif self.colorMeasurementUnitCombobox.currentText() == COLOR_UNITS[1]:
+            self.colorLineEdit.setText(self.floatToString(self.beeralyzer.getEBC(self.a430, dilutionRatio)))
+        else:
+            self.colorLineEdit.setText(self.floatToString(self.beeralyzer.getAbsorbance(self.a430, dilutionRatio)))
     
     def setColorTextColor(self, a430_10mm, a700_10mm):
         editor = self.colorLineEdit
@@ -376,12 +425,17 @@ class beeralyzerGui(QtGui.QMainWindow):
 
     def saveConfigClicked_Callback(self):
         self.config.setPortName(self.serialPortCombo.currentText())
-        self.config.setAutoConnect(self.autoConnectCheckBox.isChecked())
+        self.config.setAutoConnect(self.autoConnectCheckbox.isChecked())
         self.config.setSignificantDigits(self.significantDigitsSpinBox.value())
         self.config.setConfirmOnExit(self.confirmOnExitCheckbox.isChecked())
         self.config.setConfirmOnDeleteHistory(self.confirmOnHistoryDeleteCheckbox.isChecked())
         self.config.setConfirmOnRecal(self.confirmOnRecalibrateCheckbox.isChecked())
+        self.config.setHistoryFont(self.historTableFontFamily, self.historTableFontSize)
+        self.config.setDefaultColorUnits(self.defaultColorUnitsCombobox.currentText())
+        self.config.setDefaultTurbidityUnits(self.defaultTurbidityUnitsCombobox.currentText())
         self.config.save()
+        self.saveConfigPushButton.setEnabled(False)
+        self.configurationChanged = False
       
     def addPortfolioItem_Clicked(self):
         self.enterEditMode(True)
@@ -397,12 +451,33 @@ class beeralyzerGui(QtGui.QMainWindow):
   
     def savePortfolioItemAction_Clicked(self):
         newName = str(self.beerNameComboBox.currentText())
+ 
+        if len(self.minColorSpecLineEdit.text()) == 0:
+            minColorSpec = 0.0
+        else:
+            minColorSpec = float(self.minColorSpecLineEdit.text())    
+
+        if len(self.maxColorSpecLineEdit.text()) == 0:
+            maxColorSpec = 0.0
+        else:
+            maxColorSpec = float(self.maxColorSpecLineEdit.text())
+        
+        if len(self.minTurbiditySpecLineEdit.text()) == 0:
+            minTurbiditySpec = 0.0
+        else:
+            minTurbiditySpec = float(self.minTurbiditySpecLineEdit.text())
+
+        if len(self.maxTurbiditySpecLineEdit.text()) == 0:
+            maxTurbiditySpec = 0.0
+        else:
+            maxTurbiditySpec = float(self.maxTurbiditySpecLineEdit.text())
+
         self.portfolio.add(str(self.beerNameComboBox.currentText()),
                            str(self.BJCPStyleComboBox.currentText()),
-                           float(self.minColorSpecLineEdit.text()),
-                           float(self.maxColorSpecLineEdit.text()),
-                           float(self.minTurbiditySpecLineEdit.text()),
-                           float(self.maxTurbiditySpecLineEdit.text()))
+                           minColorSpec,
+                           maxColorSpec,
+                           minTurbiditySpec,
+                           maxTurbiditySpec)
         self.enterEditMode(False)
         self.loadPortfolioData()
         
@@ -441,9 +516,9 @@ class beeralyzerGui(QtGui.QMainWindow):
     def about_Callback(self):
         AboutWindow(self).exec_()
     
-    def saveMeasurement(self):
+    def saveMeasurement_Callback(self):
         style = str(self.currentMeasurementPortfolioComboBox.currentText())
-        colorUnits = str(self.colorMeasurementUnitComboBox.currentText())
+        colorUnits = str(self.colorMeasurementUnitCombobox.currentText())
         turbidityUnits = str(self.turbidityMeasurementUnitComboBox.currentText())
 
         try:
@@ -464,7 +539,7 @@ class beeralyzerGui(QtGui.QMainWindow):
         record.setOperator(str(self.operatorLineEdit.text()))
         record.setGyle(str(self.gyleLineEdit.text()))
         record.setSample(style)
-        record.setDilution(str(self.dilutionComboBox.currentText()))
+        record.setDilution(str(self.dilutionCombobox.currentText()))
         record.setColorUnits(colorUnits)
         record.setTurbidityUnits(turbidityUnits)
         record.setMinColor(float(self.currentMinColorSpecLabel.text()))
@@ -485,24 +560,23 @@ class beeralyzerGui(QtGui.QMainWindow):
                                              turbidityUnits, 
                                              dateTime)
         
+        currentPortfolioSelection = self.currentMeasurementPortfolioComboBox.currentIndex()
         self.loadPortfolioData()
+        self.currentMeasurementPortfolioComboBox.setCurrentIndex(currentPortfolioSelection)
 
-    def exportToCSV(self):
+    def exportToCSV_Callback(self):
         path = QtGui.QFileDialog.getSaveFileName(self, 'Save File', '', 'CSV(*.csv)')
-        if not path.isEmpty():
-            with open(unicode(path), 'wb') as stream:
-                writer = csv.writer(stream)
-                for row in range(self.tablemodel.rowCount()):
-                    rowdata = []
-                    for column in range(self.tablemodel.columnCount()):
-                        item = self.tablemodel.item(row, column)
-                        if item is not None:
-                            rowdata.append(item)
-                        else:
-                            rowdata.append('')
-                    writer.writerow(rowdata)
+        self.tablemodel.exportToCSV(path)
 
-    def deleteSelectedHistoryRows(self):
+    def deleteSelectedHistoryRows_Callback(self):
+        if self.config.confirmOnDeleteHistory:
+            title = 'Please confirm'
+            message = 'Really delete selected rows?'
+            reply = QtGui.QMessageBox.question(self, title, message, QtGui.QMessageBox.Yes | 
+                                               QtGui.QMessageBox.No, QtGui.QMessageBox.No)
+            if reply == QtGui.QMessageBox.No:
+                return
+
         count = 0
         first = -1
         for modelIndex in self.historyTableView.selectionModel().selectedRows():
@@ -511,8 +585,31 @@ class beeralyzerGui(QtGui.QMainWindow):
             count = count + 1
         deletedKeys = self.tablemodel.removeRows(first, count, self.historyTableView.selectionModel().currentIndex())
         self.history.deleteKeys(deletedKeys)
-                
+    
+    def eraseAllHistoryRows_Callback(self):
+        title = 'Please confirm'
+        message = 'Really delete ALL rows? This CANNOT BE UNDONE!'
+        reply = QtGui.QMessageBox.warning(self, title, message, QtGui.QMessageBox.Yes | 
+                                          QtGui.QMessageBox.No, QtGui.QMessageBox.No)
+        if reply == QtGui.QMessageBox.Yes:
+            deletedKeys = self.tablemodel.removeAllRows()
+            self.history.deleteKeys(deletedKeys)
+    
+    def changeFont_Callback(self):
+        dialog = QFontDialog()
+        title = "Please select font"
+        newFont, ok = dialog.getFont(QFont(self.historTableFontFamily, self.historTableFontSize), self, title)
+
+        if (ok):
+            self.historTableFontFamily = newFont.family()
+            self.historTableFontSize = newFont.pointSize()
+            self.historyTableView.setFont(newFont)
+            self.displayHistoryTableFont(newFont.family(), newFont.pointSize())
+    
+    def displayHistoryTableFont(self, family, size):
+        self.fontLineEdit.setText(family + ", " + str(size))
+    
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
-    myApp = beeralyzerGui()
+    myApp = BeeralyzerGui()
     sys.exit(app.exec_())

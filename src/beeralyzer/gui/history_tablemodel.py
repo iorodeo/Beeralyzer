@@ -4,6 +4,8 @@ Created on Nov 7, 2013
 @author: jftheoret
 '''
 import operator
+import csv
+
 from PyQt4.QtCore import QAbstractTableModel 
 from PyQt4.QtCore import QVariant
 from PyQt4.QtCore import Qt
@@ -70,7 +72,6 @@ class BeeralyzerTableModel(QAbstractTableModel):
     def item(self, row, column):
         return self.arraydata[row][column]
     
-    
     def removeRows(self, row, count, modelIndex = QModelIndex()):
         deleteFrom = row
         deleteTo = row + count - 1
@@ -92,3 +93,22 @@ class BeeralyzerTableModel(QAbstractTableModel):
         self.endRemoveRows()
         self.emit(SIGNAL("layoutChanged()"))
         return deletedKeys
+
+    def removeAllRows(self):
+        return self.removeRows(0, self.rowCount())
+
+    def exportToCSV(self, path):
+        if not path.isEmpty():
+            with open(unicode(path), 'wb') as stream:
+                writer = csv.writer(stream)
+                for row in range(self.rowCount()):
+                    rowdata = []
+                    for column in range(self.columnCount()):
+                        item = self.item(row, column)
+                        if item is not None:
+                            rowdata.append(item)
+                        else:
+                            rowdata.append('')
+                    writer.writerow(rowdata)
+    
+    

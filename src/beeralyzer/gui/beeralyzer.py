@@ -31,6 +31,9 @@ class Beeralyzer(object):
     def getEBC(self, a430_10mm, dilution=1):
         return (self.getSRM(a430_10mm, dilution) * EBC_TO_SRM_CONVERSION_FACTOR)
     
+    def getAbsorbance(self, a430_10mm, dilution=1):
+        return a430_10mm * dilution
+    
     def getDilutionValue(self, dilution):
         if dilution == 'None':
             return 1
