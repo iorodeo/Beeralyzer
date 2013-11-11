@@ -143,6 +143,10 @@
        <property name="layoutDirection">
         <enum>Qt::LeftToRight</enum>
        </property>
+       <attribute name="icon">
+        <iconset>
+         <normaloff>icons/ruler.png</normaloff>icons/ruler.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Measure!</string>
        </attribute>
@@ -331,6 +335,12 @@
                <property name="enabled">
                 <bool>true</bool>
                </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>24</height>
+                </size>
+               </property>
                <property name="font">
                 <font>
                  <pointsize>13</pointsize>
@@ -345,43 +355,129 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="3">
-              <widget class="QPlainTextEdit" name="colorPreviewEdit">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>85</width>
-                 <height>85</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
+             <item row="0" column="3" rowspan="3">
+              <widget class="QWidget" name="widget_3" native="true">
+               <layout class="QVBoxLayout" name="verticalLayout_7">
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_5">
+                  <item>
+                   <widget class="QTextEdit" name="colorPreviewEdit">
+                    <property name="enabled">
+                     <bool>true</bool>
+                    </property>
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>72</width>
+                      <height>72</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>72</width>
+                      <height>72</height>
+                     </size>
+                    </property>
+                    <property name="readOnly">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
               </widget>
              </item>
-             <item row="2" column="4">
-              <widget class="QPushButton" name="measurePushButton">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Measure!</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="4">
-              <widget class="QPushButton" name="calibratePushButton">
-               <property name="text">
-                <string>Calibrate</string>
-               </property>
+             <item row="0" column="4" rowspan="3">
+              <widget class="QWidget" name="widget_2" native="true">
+               <layout class="QVBoxLayout" name="verticalLayout_3">
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_2">
+                  <item>
+                   <widget class="QPushButton" name="calibratePushButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>44</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>44</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Calibrate</string>
+                    </property>
+                    <property name="icon">
+                     <iconset>
+                      <normaloff>icons/wand.png</normaloff>icons/wand.png</iconset>
+                    </property>
+                    <property name="iconSize">
+                     <size>
+                      <width>24</width>
+                      <height>24</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="verticalSpacer">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="measurePushButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>44</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>44</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Measure!</string>
+                    </property>
+                    <property name="icon">
+                     <iconset>
+                      <normaloff>icons/ruler.png</normaloff>icons/ruler.png</iconset>
+                    </property>
+                    <property name="iconSize">
+                     <size>
+                      <width>24</width>
+                      <height>24</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
               </widget>
              </item>
             </layout>
@@ -415,12 +511,32 @@
              <layout class="QGridLayout" name="gridLayout_10">
               <item row="0" column="0">
                <layout class="QGridLayout" name="gridLayout_9">
+                <item row="1" column="1">
+                 <widget class="QLabel" name="currentMinColorSpecLabel">
+                  <property name="text">
+                   <string>0.0</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="2">
+                 <widget class="QLabel" name="label_8">
+                  <property name="text">
+                   <string>to</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
                 <item row="0" column="0" colspan="4">
                  <widget class="QComboBox" name="currentMeasurementPortfolioComboBox">
                   <property name="minimumSize">
                    <size>
                     <width>300</width>
-                    <height>0</height>
+                    <height>24</height>
                    </size>
                   </property>
                  </widget>
@@ -457,16 +573,6 @@
                   </property>
                   <property name="openExternalLinks">
                    <bool>false</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QLabel" name="currentMinColorSpecLabel">
-                  <property name="text">
-                   <string>0.0</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -510,16 +616,6 @@
                  <widget class="QLabel" name="currentMinTurbiditySpecLabel">
                   <property name="text">
                    <string>0.0</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="2">
-                 <widget class="QLabel" name="label_8">
-                  <property name="text">
-                   <string>to</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
@@ -630,6 +726,18 @@
                      <property name="enabled">
                       <bool>false</bool>
                      </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>44</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>44</height>
+                      </size>
+                     </property>
                      <property name="font">
                       <font>
                        <weight>75</weight>
@@ -639,6 +747,10 @@
                      <property name="text">
                       <string>Save</string>
                      </property>
+                     <property name="icon">
+                      <iconset>
+                       <normaloff>icons/disk-black.png</normaloff>icons/disk-black.png</iconset>
+                     </property>
                     </widget>
                    </item>
                    <item row="2" column="1" colspan="2">
@@ -646,16 +758,29 @@
                      <property name="minimumSize">
                       <size>
                        <width>200</width>
-                       <height>0</height>
+                       <height>24</height>
                       </size>
                      </property>
                     </widget>
                    </item>
                    <item row="3" column="1">
-                    <widget class="QComboBox" name="dilutionCombobox"/>
+                    <widget class="QComboBox" name="dilutionCombobox">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>24</height>
+                      </size>
+                     </property>
+                    </widget>
                    </item>
                    <item row="1" column="1" colspan="2">
                     <widget class="QDateTimeEdit" name="dateTimeEdit">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>24</height>
+                      </size>
+                     </property>
                      <property name="displayFormat">
                       <string>yyyy-MM-dd HH:mm:ss</string>
                      </property>
@@ -669,7 +794,7 @@
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>0</height>
+                       <height>24</height>
                       </size>
                      </property>
                     </widget>
@@ -688,6 +813,10 @@
        </layout>
       </widget>
       <widget class="QWidget" name="historyTab">
+       <attribute name="icon">
+        <iconset>
+         <normaloff>icons/clock.png</normaloff>icons/clock.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>History</string>
        </attribute>
@@ -718,22 +847,70 @@
              </item>
              <item>
               <widget class="QPushButton" name="erasePushButton">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>44</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>44</height>
+                </size>
+               </property>
                <property name="text">
                 <string>Erase</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>icons/bin-metal.png</normaloff>icons/bin-metal.png</iconset>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QPushButton" name="exportPushButton">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>44</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>44</height>
+                </size>
+               </property>
                <property name="text">
                 <string>Export</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>icons/document-export.png</normaloff>icons/document-export.png</iconset>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QPushButton" name="deletePushButton">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>44</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>44</height>
+                </size>
+               </property>
                <property name="text">
                 <string>Delete</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>icons/cross.png</normaloff>icons/cross.png</iconset>
                </property>
               </widget>
              </item>
@@ -748,13 +925,281 @@
        </layout>
       </widget>
       <widget class="QWidget" name="portfolioTab">
+       <attribute name="icon">
+        <iconset>
+         <normaloff>icons/brief.png</normaloff>icons/brief.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Portfolio</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_18">
         <item row="0" column="0" rowspan="2" colspan="3">
          <layout class="QGridLayout" name="gridLayout_11">
-          <item row="1" column="0" colspan="7">
+          <item row="2" column="0" rowspan="2" colspan="5">
+           <widget class="QGroupBox" name="beerSpecGroup">
+            <property name="title">
+             <string>Beer Specifications</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_14">
+             <item row="0" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout_11">
+               <item>
+                <widget class="QGroupBox" name="groupBox_9">
+                 <property name="title">
+                  <string>Color</string>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_16">
+                  <item row="0" column="0">
+                   <layout class="QGridLayout" name="gridLayout_13">
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="maxColorLabel">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="text">
+                       <string>Maximum</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="minColorLabel">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="text">
+                       <string>Minimum</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QLineEdit" name="maxColorSpecLineEdit">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>22</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QLineEdit" name="minColorSpecLineEdit">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>22</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="2">
+                     <widget class="QComboBox" name="comboBox_2">
+                      <item>
+                       <property name="text">
+                        <string>SRM</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
+                    <item row="1" column="2">
+                     <widget class="QComboBox" name="comboBox_3">
+                      <item>
+                       <property name="text">
+                        <string>SRM</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="QGroupBox" name="groupBox_10">
+                 <property name="title">
+                  <string>Turbidity</string>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_17">
+                  <item row="0" column="0">
+                   <layout class="QGridLayout" name="gridLayout_15">
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="maxTurbidityLabel">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="text">
+                       <string>Maximum</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="minTurbidityLabel">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="text">
+                       <string>Minimum</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QLineEdit" name="minTurbiditySpecLineEdit">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>22</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QLineEdit" name="maxTurbiditySpecLineEdit">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>22</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="2">
+                     <widget class="QComboBox" name="comboBox_4">
+                      <item>
+                       <property name="text">
+                        <string>Absorbance</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
+                    <item row="1" column="2">
+                     <widget class="QComboBox" name="comboBox_5">
+                      <item>
+                       <property name="text">
+                        <string>Absorbance</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="0" column="3" colspan="3">
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <item>
+             <widget class="QPushButton" name="addPortfolioItemPushButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>44</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>44</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Add</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icons/plus.png</normaloff>icons/plus.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="editPortfolioItemPushButton">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>44</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>44</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Edit</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icons/pencil.png</normaloff>icons/pencil.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="deletePortfolioItemPushButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>44</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>44</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Delete</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icons/cross.png</normaloff>icons/cross.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0" colspan="6">
            <widget class="QGroupBox" name="BJCPStyleGroup">
             <property name="title">
              <string>BJCP Style</string>
@@ -960,149 +1405,61 @@
             </layout>
            </widget>
           </item>
-          <item row="0" column="0" colspan="4">
-           <widget class="QComboBox" name="beerNameComboBox">
-            <property name="editable">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="7">
-           <widget class="QGroupBox" name="beerSpecGroup">
-            <property name="title">
-             <string>Beer Specifications</string>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_14">
-             <item row="0" column="0">
-              <layout class="QHBoxLayout" name="horizontalLayout_11">
+          <item row="2" column="5" rowspan="2">
+           <widget class="QWidget" name="widget_4" native="true">
+            <layout class="QVBoxLayout" name="verticalLayout_9">
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_8">
                <item>
-                <widget class="QGroupBox" name="groupBox_9">
-                 <property name="title">
-                  <string>Color</string>
+                <widget class="QPushButton" name="savePortfolioItemActionPushButton">
+                 <property name="enabled">
+                  <bool>false</bool>
                  </property>
-                 <layout class="QGridLayout" name="gridLayout_16">
-                  <item row="0" column="0">
-                   <layout class="QGridLayout" name="gridLayout_13">
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="maxColorLabel">
-                      <property name="enabled">
-                       <bool>false</bool>
-                      </property>
-                      <property name="text">
-                       <string>Maximum</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="minColorLabel">
-                      <property name="enabled">
-                       <bool>false</bool>
-                      </property>
-                      <property name="text">
-                       <string>Minimum</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="1">
-                     <widget class="QLineEdit" name="maxColorSpecLineEdit">
-                      <property name="enabled">
-                       <bool>false</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="1">
-                     <widget class="QLineEdit" name="minColorSpecLineEdit">
-                      <property name="enabled">
-                       <bool>false</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="2">
-                     <widget class="QComboBox" name="comboBox_2">
-                      <item>
-                       <property name="text">
-                        <string>SRM</string>
-                       </property>
-                      </item>
-                     </widget>
-                    </item>
-                    <item row="1" column="2">
-                     <widget class="QComboBox" name="comboBox_3">
-                      <item>
-                       <property name="text">
-                        <string>SRM</string>
-                       </property>
-                      </item>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                 </layout>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>44</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>44</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Save</string>
+                 </property>
+                 <property name="icon">
+                  <iconset>
+                   <normaloff>icons/disk-black.png</normaloff>icons/disk-black.png</iconset>
+                 </property>
                 </widget>
                </item>
                <item>
-                <widget class="QGroupBox" name="groupBox_10">
-                 <property name="title">
-                  <string>Turbidity</string>
+                <widget class="QPushButton" name="cancelPortfolioItemActionPushButton">
+                 <property name="enabled">
+                  <bool>false</bool>
                  </property>
-                 <layout class="QGridLayout" name="gridLayout_17">
-                  <item row="0" column="0">
-                   <layout class="QGridLayout" name="gridLayout_15">
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="maxTurbidityLabel">
-                      <property name="enabled">
-                       <bool>false</bool>
-                      </property>
-                      <property name="text">
-                       <string>Maximum</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="minTurbidityLabel">
-                      <property name="enabled">
-                       <bool>false</bool>
-                      </property>
-                      <property name="text">
-                       <string>Minimum</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="1">
-                     <widget class="QLineEdit" name="minTurbiditySpecLineEdit">
-                      <property name="enabled">
-                       <bool>false</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="1">
-                     <widget class="QLineEdit" name="maxTurbiditySpecLineEdit">
-                      <property name="enabled">
-                       <bool>false</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="2">
-                     <widget class="QComboBox" name="comboBox_4">
-                      <item>
-                       <property name="text">
-                        <string>Absorbance</string>
-                       </property>
-                      </item>
-                     </widget>
-                    </item>
-                    <item row="1" column="2">
-                     <widget class="QComboBox" name="comboBox_5">
-                      <item>
-                       <property name="text">
-                        <string>Absorbance</string>
-                       </property>
-                      </item>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                 </layout>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>44</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>44</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Cancel</string>
+                 </property>
+                 <property name="icon">
+                  <iconset>
+                   <normaloff>icons/block.png</normaloff>icons/block.png</iconset>
+                 </property>
                 </widget>
                </item>
               </layout>
@@ -1110,57 +1467,10 @@
             </layout>
            </widget>
           </item>
-          <item row="3" column="0" colspan="3">
-           <spacer name="horizontalSpacer_9">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="0" column="4">
-           <widget class="QPushButton" name="addPortfolioItemPushButton">
-            <property name="text">
-             <string>Add</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="5">
-           <widget class="QPushButton" name="editPortfolioItemPushButton">
-            <property name="text">
-             <string>Edit</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="6">
-           <widget class="QPushButton" name="deletePortfolioItemPushButton">
-            <property name="text">
-             <string>Delete</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="6">
-           <widget class="QPushButton" name="savePortfolioItemActionPushButton">
-            <property name="enabled">
+          <item row="0" column="0" colspan="3">
+           <widget class="QComboBox" name="beerNameComboBox">
+            <property name="editable">
              <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Save</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="5">
-           <widget class="QPushButton" name="cancelPortfolioItemActionPushButton">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Cancel</string>
             </property>
            </widget>
           </item>
@@ -1169,6 +1479,10 @@
        </layout>
       </widget>
       <widget class="QWidget" name="configurationTab">
+       <attribute name="icon">
+        <iconset>
+         <normaloff>icons/cog.png</normaloff>icons/cog.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Configuration</string>
        </attribute>
@@ -1203,8 +1517,8 @@
                 <widget class="QComboBox" name="serialPortCombo">
                  <property name="minimumSize">
                   <size>
-                   <width>250</width>
-                   <height>0</height>
+                   <width>225</width>
+                   <height>24</height>
                   </size>
                  </property>
                  <property name="editable">
@@ -1220,32 +1534,66 @@
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>44</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>44</height>
+                  </size>
+                 </property>
                  <property name="text">
-                  <string/>
+                  <string>Refresh</string>
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>reload.png</normaloff>reload.png</iconset>
+                   <normaloff>icons/refresh.png</normaloff>icons/refresh.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
-                   <width>16</width>
-                   <height>16</height>
+                   <width>24</width>
+                   <height>24</height>
                   </size>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QPushButton" name="connectPushButton">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>44</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>44</height>
+                  </size>
+                 </property>
                  <property name="text">
                   <string>Connect</string>
+                 </property>
+                 <property name="icon">
+                  <iconset>
+                   <normaloff>icons/connectivity.png</normaloff>icons/connectivity.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>24</width>
+                   <height>24</height>
+                  </size>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QCheckBox" name="autoConnectCheckbox">
                  <property name="text">
-                  <string>Auto-connect at startup</string>
+                  <string>Auto-connect</string>
                  </property>
                 </widget>
                </item>
@@ -1284,6 +1632,12 @@
                </item>
                <item row="0" column="1">
                 <widget class="QLineEdit" name="samplesLineEdit">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>24</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
                    <width>100</width>
@@ -1310,6 +1664,12 @@
                </item>
                <item row="1" column="1">
                 <widget class="QSpinBox" name="significantDigitsSpinBox">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>24</height>
+                  </size>
+                 </property>
                  <property name="buttonSymbols">
                   <enum>QAbstractSpinBox::UpDownArrows</enum>
                  </property>
@@ -1368,7 +1728,7 @@
                  <property name="minimumSize">
                   <size>
                    <width>200</width>
-                   <height>0</height>
+                   <height>24</height>
                   </size>
                  </property>
                 </widget>
@@ -1391,6 +1751,12 @@
                </item>
                <item row="1" column="1" colspan="2">
                 <widget class="QComboBox" name="comboBox">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>24</height>
+                  </size>
+                 </property>
                  <item>
                   <property name="text">
                    <string>English (US)</string>
@@ -1416,10 +1782,24 @@
              <item row="0" column="0">
               <layout class="QGridLayout" name="gridLayout_6">
                <item row="1" column="1">
-                <widget class="QComboBox" name="defaultTurbidityUnitsCombobox"/>
+                <widget class="QComboBox" name="defaultTurbidityUnitsCombobox">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>24</height>
+                  </size>
+                 </property>
+                </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QComboBox" name="defaultColorUnitsCombobox"/>
+                <widget class="QComboBox" name="defaultColorUnitsCombobox">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>24</height>
+                  </size>
+                 </property>
+                </widget>
                </item>
                <item row="1" column="0">
                 <widget class="QLabel" name="label_16">
@@ -1494,33 +1874,6 @@
           </item>
          </layout>
         </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_6">
-          <item>
-           <spacer name="horizontalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="saveConfigPushButton">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Save</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
        </layout>
       </widget>
      </widget>
@@ -1558,7 +1911,6 @@
   <tabstop>turbidityLineEdit</tabstop>
   <tabstop>turbidityMeasurementUnitComboBox</tabstop>
   <tabstop>BJCPColorDescriptionLineEdit</tabstop>
-  <tabstop>colorPreviewEdit</tabstop>
   <tabstop>currentMeasurementPortfolioComboBox</tabstop>
   <tabstop>gyleLineEdit</tabstop>
   <tabstop>operatorLineEdit</tabstop>
@@ -1579,7 +1931,6 @@
   <tabstop>autoConnectCheckbox</tabstop>
   <tabstop>defaultColorUnitsCombobox</tabstop>
   <tabstop>defaultTurbidityUnitsCombobox</tabstop>
-  <tabstop>saveConfigPushButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

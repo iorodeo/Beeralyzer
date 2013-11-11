@@ -35,8 +35,8 @@ class BeeralyzerGui(QtGui.QMainWindow):
         self.portfolio = BeerPortfolio()        
         self.beeralyzer = Beeralyzer()
 
-        self.connectActions()
         self.initialize()
+        self.connectActions()
         self.updateWidgetEnabled()
         self.center()
         self.show()
@@ -90,7 +90,6 @@ class BeeralyzerGui(QtGui.QMainWindow):
         self.loadPortfolioData()   
         self.loadBJCPData()   
         self.loadHistoryData()
-        self.saveConfigPushButton.setEnabled(False)
         self.configurationChanged = False
             
     def populateSerialPortComboBox(self):
@@ -103,7 +102,7 @@ class BeeralyzerGui(QtGui.QMainWindow):
         if comports:
             for p in sorted(comports()):
                 self.serialPortCombo.addItem(p[0])
-            self.port = self.serialPortCombo.itemText(0)    
+#            self.port = self.serialPortCombo.itemText(0)    
         elif osType == 'Linux': 
             self.port = colorimeter.constants.DFLT_PORT_LINUX 
         elif osType == 'Darwin':
@@ -142,6 +141,7 @@ class BeeralyzerGui(QtGui.QMainWindow):
             index = self.serialPortCombo.findText(self.config.serialPortName)
             if index != -1:
                 self.serialPortCombo.setCurrentIndex(index)
+                self.port = self.config.serialPortName
                 if self.config.autoConnect:
                     self.connectDevice()
 
@@ -198,7 +198,6 @@ class BeeralyzerGui(QtGui.QMainWindow):
 
         self.reloadSerialPortListButton.clicked.connect(self.reloadSerialPortListClicked_Callback)
         
-        self.saveConfigPushButton.clicked.connect(self.saveConfigClicked_Callback)
         self.editPortfolioItemPushButton.clicked.connect(self.editPortfolioItemClicked_Callback)
         self.deletePortfolioItemPushButton.clicked.connect(self.deletePortfolioItemClicked_Callback)
         
@@ -232,9 +231,8 @@ class BeeralyzerGui(QtGui.QMainWindow):
         self.dilutionCombobox.currentIndexChanged.connect(self.displayMeasurements)
                
     def configWidgetChanged_Callback(self):
-        self.saveConfigPushButton.setEnabled(True)
-        self.configurationChanged = True
-    
+        self.saveConfigClicked_Callback()
+            
     def updatePortfolioInfo_Callback(self):
         currentPortfolioName = self.beerNameComboBox.currentText()
         selectedItem = self.portfolio.get(str(currentPortfolioName))
@@ -434,7 +432,6 @@ class BeeralyzerGui(QtGui.QMainWindow):
         self.config.setDefaultColorUnits(self.defaultColorUnitsCombobox.currentText())
         self.config.setDefaultTurbidityUnits(self.defaultTurbidityUnitsCombobox.currentText())
         self.config.save()
-        self.saveConfigPushButton.setEnabled(False)
         self.configurationChanged = False
       
     def addPortfolioItem_Clicked(self):
