@@ -21,6 +21,7 @@ from config import BeeralyzerConfigFile
 from history_file import HistoryFile
 from history_record import BeeralyzerHistoryRecord
 from history_tablemodel import BeeralyzerTableModel
+from measure_notes import MeasureNotes
 from portfolio import BeerPortfolio
 
 class BeeralyzerGui(QtGui.QMainWindow):
@@ -79,6 +80,9 @@ class BeeralyzerGui(QtGui.QMainWindow):
         
         self.statusbar.showMessage('Not Connected')
         
+        self.colorOOSLabel.hide()
+        self.turbidityOOSLabel.hide()
+        
         self.minColorSpecLineEdit.setValidator(QDoubleValidator())
         self.maxColorSpecLineEdit.setValidator(QDoubleValidator())
         self.minTurbiditySpecLineEdit.setValidator(QDoubleValidator())
@@ -90,7 +94,7 @@ class BeeralyzerGui(QtGui.QMainWindow):
         self.loadPortfolioData()   
         self.loadBJCPData()   
         self.loadHistoryData()
-        self.configurationChanged = False
+        self.dateTimeEdit.setDateTime(QtCore.QDateTime.currentDateTime())
             
     def populateSerialPortComboBox(self):
         try:
@@ -159,10 +163,10 @@ class BeeralyzerGui(QtGui.QMainWindow):
         portfolioNameList = self.portfolio.list()
         portfolioNameList.sort()
         self.beerNameComboBox.clear()
-        self.currentMeasurementPortfolioComboBox.clear()
+        self.currentMeasurementPortfolioCombobox.clear()
         for key in portfolioNameList:
             self.beerNameComboBox.addItem(key)
-            self.currentMeasurementPortfolioComboBox.addItem(key)
+            self.currentMeasurementPortfolioCombobox.addItem(key)
         self.updatePortfolioInfo_Callback()
 
     def loadBJCPData(self):
@@ -202,13 +206,16 @@ class BeeralyzerGui(QtGui.QMainWindow):
         self.deletePortfolioItemPushButton.clicked.connect(self.deletePortfolioItemClicked_Callback)
         
         self.beerNameComboBox.currentIndexChanged.connect(self.updatePortfolioInfo_Callback)
-        self.currentMeasurementPortfolioComboBox.currentIndexChanged.connect(self.updateSelectedMeasurementPortfolioInfo_Callback)
+        self.currentMeasurementPortfolioCombobox.currentIndexChanged.connect(self.updateSelectedMeasurementPortfolioInfo_Callback)
+        self.currentMeasurementPortfolioCombobox.currentIndexChanged.connect(self.displayMeasurements)
+
         self.BJCPStyleComboBox.currentIndexChanged.connect(self.updateSelectedBJCPStyle_Callback)
         
         self.savePortfolioItemActionPushButton.clicked.connect(self.savePortfolioItemAction_Clicked)
         self.cancelPortfolioItemActionPushButton.clicked.connect(self.cancelPortfolioItemAction_Clicked)
         self.addPortfolioItemPushButton.clicked.connect(self.addPortfolioItem_Clicked)
         self.actionAbout.triggered.connect(self.about_Callback)
+        self.notesToolButton.clicked.connect(self.notes_Callback)
         
         self.saveMeasurementPushButton.clicked.connect(self.saveMeasurement_Callback)
         self.exportPushButton.clicked.connect(self.exportToCSV_Callback)
@@ -246,7 +253,7 @@ class BeeralyzerGui(QtGui.QMainWindow):
             self.maxTurbiditySpecLineEdit.setText(self.floatToString(selectedItem.maxTurbidity))    
     
     def updateSelectedMeasurementPortfolioInfo_Callback(self):
-        currentPortfolioName = self.currentMeasurementPortfolioComboBox.currentText()
+        currentPortfolioName = self.currentMeasurementPortfolioCombobox.currentText()
         selectedItem = self.portfolio.get(str(currentPortfolioName))
         if selectedItem is not None:
             self.currentMinColorSpecLabel.setText(self.floatToString(selectedItem.minColor))
@@ -395,6 +402,8 @@ class BeeralyzerGui(QtGui.QMainWindow):
         self.setBeerColorPreview(srmValue)
         self.setBeerColorDescription(srmValue)
         
+        self.checkSpecs()
+        
         self.colorLineEdit.setText(self.floatToString(srmValue))
         if self.colorMeasurementUnitCombobox.currentText() == COLOR_UNITS[0]:
             self.colorLineEdit.setText(self.floatToString(srmValue))
@@ -411,6 +420,20 @@ class BeeralyzerGui(QtGui.QMainWindow):
         else:
             palette.setColor(QtGui.QPalette.Active, QtGui.QPalette.Text, QtGui.QColor(0, 0, 0))
         editor.setPalette(palette)
+
+    def checkSpecs(self):
+        #TODO: Use UNITS when checking for specs!!!
+        portfolioItem = self.portfolio.get(str(self.currentMeasurementPortfolioCombobox.currentText()))
+        if self.beeralyzer.isColorInRange(self.a430, str(self.dilutionCombobox.currentText()), portfolioItem.minColor, portfolioItem.maxColor):
+            self.colorOOSLabel.hide()
+        else:
+            self.colorOOSLabel.show()
+        
+        #TODO: Use UNITS when checking for specs!!!
+        if self.beeralyzer.isTurbidityInRange(self.a700, portfolioItem.minTurbidity, portfolioItem.maxTurbidity):
+            self.turbidityOOSLabel.hide()
+        else:
+            self.turbidityOOSLabel.show()
 
     def setBeerColorPreview(self, srmValue):
         R, G, B = self.beeralyzer.getRGBfromSRM(srmValue)
@@ -432,7 +455,6 @@ class BeeralyzerGui(QtGui.QMainWindow):
         self.config.setDefaultColorUnits(self.defaultColorUnitsCombobox.currentText())
         self.config.setDefaultTurbidityUnits(self.defaultTurbidityUnitsCombobox.currentText())
         self.config.save()
-        self.configurationChanged = False
       
     def addPortfolioItem_Clicked(self):
         self.enterEditMode(True)
@@ -512,9 +534,14 @@ class BeeralyzerGui(QtGui.QMainWindow):
         
     def about_Callback(self):
         AboutWindow(self).exec_()
-    
+
+    def notes_Callback(self):
+        dialog = MeasureNotes(self)
+        if dialog.exec_() == QtGui.QDialog.Accepted:
+            print dialog.textEdit.toPlainText()
+        
     def saveMeasurement_Callback(self):
-        style = str(self.currentMeasurementPortfolioComboBox.currentText())
+        style = str(self.currentMeasurementPortfolioCombobox.currentText())
         colorUnits = str(self.colorMeasurementUnitCombobox.currentText())
         turbidityUnits = str(self.turbidityMeasurementUnitComboBox.currentText())
 
@@ -557,9 +584,9 @@ class BeeralyzerGui(QtGui.QMainWindow):
                                              turbidityUnits, 
                                              dateTime)
         
-        currentPortfolioSelection = self.currentMeasurementPortfolioComboBox.currentIndex()
+        currentPortfolioSelection = self.currentMeasurementPortfolioCombobox.currentIndex()
         self.loadPortfolioData()
-        self.currentMeasurementPortfolioComboBox.setCurrentIndex(currentPortfolioSelection)
+        self.currentMeasurementPortfolioCombobox.setCurrentIndex(currentPortfolioSelection)
 
     def exportToCSV_Callback(self):
         path = QtGui.QFileDialog.getSaveFileName(self, 'Save File', '', 'CSV(*.csv)')

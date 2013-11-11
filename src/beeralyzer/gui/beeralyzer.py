@@ -9,6 +9,9 @@ from beer_constants import A10MM_TO_SRM_CONVERSION_FACTOR
 from beer_constants import EBC_TO_SRM_CONVERSION_FACTOR
 from beer_constants import SRM_TO_RGB
 from beer_constants import BJCP_COLOR_DESCRIPTIONS
+from beer_constants import COLOR_UNITS
+from beer_constants import DILUTION_VALUES
+from beer_constants import TURBIDITY_UNITS
 
 class Beeralyzer(object):
 
@@ -35,14 +38,10 @@ class Beeralyzer(object):
         return a430_10mm * dilution
     
     def getDilutionValue(self, dilution):
-        if dilution == 'None':
-            return 1
-        elif dilution == "1:1":
-            return 2
-        elif dilution == "1:2":
-            return 3
-        else:
-            return 1
+        for key, value in DILUTION_VALUES.items():
+            if dilution == value:
+                return key    
+        return 0
         
     def getDescriptionFromSRM(self, SRM):
         description = ''
@@ -70,3 +69,24 @@ class Beeralyzer(object):
             R=G=B=0
         return R, G, B
     
+    def isColorInRange(self, a430, dilution, minSpec, maxSpec, units=COLOR_UNITS[0]):
+        if units == COLOR_UNITS[0]:
+            d = self.getDilutionValue(dilution)
+            srm = self.getSRM(a430, d)
+            if (srm >= minSpec) and (srm <= maxSpec):
+                return True
+            else:
+                return False
+        else:
+            #TODO: Implement other units!
+            return False
+        
+    def isTurbidityInRange(self, a700, minSpec, maxSpec, units=TURBIDITY_UNITS[0]):
+        if units == TURBIDITY_UNITS[0]:
+            if (a700 >= minSpec) and (a700 <= maxSpec):
+                return True
+            else:
+                return False
+        else:
+            #TODO: Implement other units!
+            return False

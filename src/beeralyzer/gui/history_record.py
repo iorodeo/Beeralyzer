@@ -35,7 +35,7 @@ class BeeralyzerHistoryRecord(object):
                                  (OPERATOR_KEY,        ['Operator', '']),
                                  (GYLE_KEY,            ['Gyle', '']),
                                  (SAMPLE_KEY,          ['Sample', '']),
-                                 (DILUTION_KEY,        ['Dilution', DILUTION_VALUES[0]]),
+                                 (DILUTION_KEY,        ['Dilution', DILUTION_VALUES[1]]),
                                  (COLOR_KEY,           ['Color', 0.0]),
                                  (COLOR_UNITS_KEY,     ['Color Units', COLOR_UNITS[0]]),
                                  (TURBIDITY_KEY,       ['Turbidity', 0.0]),
