@@ -47,7 +47,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="versionLabel">
        <property name="font">
         <font>
          <pointsize>10</pointsize>

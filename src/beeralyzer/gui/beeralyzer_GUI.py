@@ -18,6 +18,7 @@ from about_gui import AboutWindow
 from beer_constants import COLOR_UNITS, DILUTION_VALUES, TURBIDITY_UNITS
 from beeralyzer import Beeralyzer
 from config import BeeralyzerConfigFile
+from constants import VERSION
 from history_file import HistoryFile
 from history_record import BeeralyzerHistoryRecord
 from history_tablemodel import BeeralyzerTableModel
@@ -79,6 +80,8 @@ class BeeralyzerGui(QtGui.QMainWindow):
         self.historyTableFontSize = 10
         
         self.statusbar.showMessage('Not Connected')
+        self.version = VERSION
+        self.setWindowTitle("Beeralyzer - Version " + VERSION)        
         
         self.colorOOSLabel.hide()
         self.turbidityOOSLabel.hide()
@@ -422,6 +425,9 @@ class BeeralyzerGui(QtGui.QMainWindow):
         editor.setPalette(palette)
 
     def checkSpecs(self):
+        if self.currentMeasurementPortfolioCombobox.currentIndex() == -1:
+            return
+
         #TODO: Use UNITS when checking for specs!!!
         portfolioItem = self.portfolio.get(str(self.currentMeasurementPortfolioCombobox.currentText()))
         if self.beeralyzer.isColorInRange(self.a430, str(self.dilutionCombobox.currentText()), portfolioItem.minColor, portfolioItem.maxColor):

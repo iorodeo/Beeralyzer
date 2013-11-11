@@ -25,6 +25,7 @@ MIN_COLOR_KEY       = 'minColorSpec'
 MAX_COLOR_KEY       = 'maxColorSpec'
 MIN_TURBIDITY_KEY   = 'minTurbiditySpec'
 MAX_TURBIDITY_KEY   = 'maxTurbiditySpec'
+NOTES_KEY           = 'notes'
 
 class BeeralyzerHistoryRecord(object):
 
@@ -43,7 +44,8 @@ class BeeralyzerHistoryRecord(object):
                                  (MIN_COLOR_KEY,       ['Min Color Spec', 0.0]),
                                  (MAX_COLOR_KEY,       ['Max Color Spec', float("inf")]),
                                  (MIN_TURBIDITY_KEY,   ['Min Turb. Spec', 0.0]),
-                                 (MAX_TURBIDITY_KEY,   ['Max Turb. Spec', 0.0])])
+                                 (MAX_TURBIDITY_KEY,   ['Max Turb. Spec', 0.0]),
+                                 (NOTES_KEY,           ['Notes',''])])
                                 
     def getDescriptions(self):
         descriptions = []
@@ -93,6 +95,9 @@ class BeeralyzerHistoryRecord(object):
     def setMaxTurbidity(self, maxTurbidity):
         self.data.get(MAX_TURBIDITY_KEY)[1] = maxTurbidity
 
+    def setNotes(self, notes):
+        self.data.get(NOTES_KEY)[1] = notes
+        
     def getKey(self):
         return str(self.data.get(DATE_KEY)[1]) + str(self.data.get(TIME_KEY)[1])
     
