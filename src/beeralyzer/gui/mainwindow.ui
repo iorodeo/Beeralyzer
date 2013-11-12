@@ -195,6 +195,9 @@
                  <bold>true</bold>
                 </font>
                </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The measured color.  If the measurement is &lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;RED&lt;/span&gt;, the sample's turbidity is too high for an accurate reading.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="text">
                 <string>-.-</string>
                </property>
@@ -347,6 +350,9 @@
                  <italic>true</italic>
                 </font>
                </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The color description according to the BJCP guidelines.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="text">
                 <string>---</string>
                </property>
@@ -411,6 +417,9 @@
                       <width>16777215</width>
                       <height>44</height>
                      </size>
+                    </property>
+                    <property name="toolTip">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The beeralyzer requires calibration before use. Place water in a cuvette and activate the calibrtion feature.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                     </property>
                     <property name="text">
                      <string>Calibrate</string>
@@ -482,6 +491,9 @@
              </item>
              <item row="0" column="2">
               <widget class="QLabel" name="colorOOSLabel">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Indicates that the color is out of spec compared to the beer portfolio definition.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="frameShape">
                 <enum>QFrame::NoFrame</enum>
                </property>
@@ -495,6 +507,9 @@
              </item>
              <item row="1" column="2">
               <widget class="QLabel" name="turbidityOOSLabel">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Indicates that the turbidity is out of spec compared to the beer portfolio definition.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -561,6 +576,9 @@
                     <width>300</width>
                     <height>24</height>
                    </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select your beer as per defined in the Portfolio tab.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                   </property>
                  </widget>
                 </item>
@@ -768,6 +786,9 @@
                    <height>24</height>
                   </size>
                  </property>
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is your batch number.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
                 </widget>
                </item>
                <item row="4" column="0">
@@ -822,6 +843,9 @@
                    <width>0</width>
                    <height>24</height>
                   </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Samples that are too dark, such as porters and stout, must be diluted. 1:1 indicates 1 part water and 1 part beer, while 2:1 indicate 2 parts water and 1 part beer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                 </widget>
                </item>
@@ -892,6 +916,9 @@
                  <height>44</height>
                 </size>
                </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Deletes ALL rows in history table. Cannot be undone.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="text">
                 <string>Erase</string>
                </property>
@@ -915,6 +942,9 @@
                  <height>44</height>
                 </size>
                </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Export all the history table to CSV format.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="text">
                 <string>Export</string>
                </property>
@@ -937,6 +967,9 @@
                  <width>16777215</width>
                  <height>44</height>
                 </size>
+               </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Deletes the selected rows.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="text">
                 <string>Delete</string>
@@ -1625,6 +1658,9 @@
                </item>
                <item>
                 <widget class="QCheckBox" name="autoConnectCheckbox">
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If checked, the software will try to connect to the device when it starts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
                  <property name="text">
                   <string>Auto-connect</string>
                  </property>

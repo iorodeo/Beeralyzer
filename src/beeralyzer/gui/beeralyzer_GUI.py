@@ -25,6 +25,8 @@ from history_tablemodel import BeeralyzerTableModel
 from measure_notes import MeasureNotes
 from portfolio import BeerPortfolio
 
+TEST= False
+
 class BeeralyzerGui(QtGui.QMainWindow):
     
     config = BeeralyzerConfigFile()
@@ -73,6 +75,8 @@ class BeeralyzerGui(QtGui.QMainWindow):
         self.history = HistoryFile()
         self.tablemodel = None
         
+        self.currentNotes = ''
+        
         self.a430 = 0.0
         self.a700 = 0.0
         
@@ -98,7 +102,7 @@ class BeeralyzerGui(QtGui.QMainWindow):
         self.loadBJCPData()   
         self.loadHistoryData()
         self.dateTimeEdit.setDateTime(QtCore.QDateTime.currentDateTime())
-            
+             
     def populateSerialPortComboBox(self):
         try:
             from serial.tools.list_ports import comports
@@ -323,7 +327,14 @@ class BeeralyzerGui(QtGui.QMainWindow):
         self.dev.close()
         self.dev = None
 
-    def getMeasurement(self):        
+    def getMeasurement(self):      
+        
+        if TEST:
+            self.a430 = 0.3
+            self.a700 = 0.01
+            self.saveMeasurementPushButton.setEnabled(True)
+            return
+          
         error = False
         try:
             srmAbso = self.dev.getMeasurementBlue()[2]
@@ -341,6 +352,9 @@ class BeeralyzerGui(QtGui.QMainWindow):
             self.saveMeasurementPushButton.setEnabled(True)
 
     def updateWidgetEnabled(self):
+        
+        if TEST:
+            return
         
         if self.dev is None:
             self.connectPushButton.setText('Connect')
@@ -542,9 +556,9 @@ class BeeralyzerGui(QtGui.QMainWindow):
         AboutWindow(self).exec_()
 
     def notes_Callback(self):
-        dialog = MeasureNotes(self)
+        dialog = MeasureNotes(self, self.currentNotes)
         if dialog.exec_() == QtGui.QDialog.Accepted:
-            print dialog.textEdit.toPlainText()
+            self.currentNotes = dialog.textEdit.toPlainText()
         
     def saveMeasurement_Callback(self):
         style = str(self.currentMeasurementPortfolioCombobox.currentText())
@@ -576,6 +590,7 @@ class BeeralyzerGui(QtGui.QMainWindow):
         record.setMaxColor(float(self.currentMaxColorSpecLabel.text()))
         record.setMinTurbidity(float(self.currentMinTurbiditySpecLabel.text()))
         record.setMaxTurbidity(float(self.currentMaxTurbiditySpecLabel.text()))
+        record.setNotes(self.currentNotes)
         
         record.setColor(color)            
         record.setTurbidity(turbidity)
