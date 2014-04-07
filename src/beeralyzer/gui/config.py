@@ -3,7 +3,11 @@ Created on Nov 2, 2013
 
 @author: jftheoret
 '''
+import os
+import sys
 import ConfigParser
+from constants import BEERALYZER_DIRECTORY
+from resource_path import resourcePath
 
 COMM_SECTION          = "Communications"
 PORT_NAME             = "PortName"
@@ -29,7 +33,12 @@ class BeeralyzerConfigFile(object):
 
     def __init__(self):
         self.config = ConfigParser.RawConfigParser()
+
         self.configFileName = 'beeralyzer.cfg'
+        self.configFileFullPath = os.path.join(BEERALYZER_DIRECTORY, self.configFileName) 
+
+        self.defaultConfigFileName =  'default_beeralyzer.cfg'
+        self.defaultConfigFileFullPath = resourcePath(self.defaultConfigFileName) 
             
         self.serialPortName         = ''
         self.autoConnect            = False
@@ -96,12 +105,16 @@ class BeeralyzerConfigFile(object):
         self.config.set(DEFAULT_UNITS_SECTION, DEFAULT_COLOR_UNITS, self.defaultColorUnits)
         self.config.set(DEFAULT_UNITS_SECTION, DEFAULT_TURB_UNITS,  self.defaultTurbidityUnits)
 
-        with open(self.configFileName, 'wb') as configfile:
+        with open(self.configFileFullPath, 'wb') as configfile:
             self.config.write(configfile)
     
     def load(self):
+        if os.path.exists(self.configFileFullPath):
+            fullPathName = self.configFileFullPath
+        else:
+            fullPathName = self.defaultConfigFileFullPath
         try:
-            self.config.read(self.configFileName)
+            self.config.read(fullPathName)
             self.autoConnect            = self.config.getboolean(COMM_SECTION, PORT_AUTOCONNECT)
             self.serialPortName         = self.config.get(COMM_SECTION, PORT_NAME)
             self.significantDigits      = self.config.getint(SAMPLE_SECTION, SAMPLE_DIGITS)

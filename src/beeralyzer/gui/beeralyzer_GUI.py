@@ -5,6 +5,8 @@ Created on Oct 26, 2013
 '''
 import platform
 import sys
+import os
+
 
 from PyQt4 import QtCore, QtGui, uic
 from PyQt4.QtGui import QFont
@@ -19,11 +21,14 @@ from beer_constants import COLOR_UNITS, DILUTION_VALUES, TURBIDITY_UNITS
 from beeralyzer import Beeralyzer
 from config import BeeralyzerConfigFile
 from constants import VERSION
+from constants import BEERALYZER_DIRECTORY
 from history_file import HistoryFile
 from history_record import BeeralyzerHistoryRecord
 from history_tablemodel import BeeralyzerTableModel
 from measure_notes import MeasureNotes
 from portfolio import BeerPortfolio
+from resource_path import resourcePath
+from qrc_resources import *
 
 TEST= False
 
@@ -34,7 +39,8 @@ class BeeralyzerGui(QtGui.QMainWindow):
     def __init__(self, parent=None):
         super(BeeralyzerGui,self).__init__(parent)
         QtGui.QMainWindow.__init__(self)
-        self.ui = uic.loadUi("mainwindow.ui", self)
+        self.ui = uic.loadUi(resourcePath("mainwindow.ui"), self)
+        self.checkForBeeralyzerDir()
 
         self.portfolio = BeerPortfolio()        
         self.beeralyzer = Beeralyzer()
@@ -71,7 +77,8 @@ class BeeralyzerGui(QtGui.QMainWindow):
         self.isCalibrated = False
         self.dev = None
         self.numSamples = None
-        
+
+
         self.history = HistoryFile()
         self.tablemodel = None
         
@@ -177,7 +184,7 @@ class BeeralyzerGui(QtGui.QMainWindow):
         self.updatePortfolioInfo_Callback()
 
     def loadBJCPData(self):
-        self.BJCPData = recfromcsv('bjcp2008.csv', delimiter=',')
+        self.BJCPData = recfromcsv(resourcePath('bjcp2008.csv'), delimiter=',')
         for BJCPStyle in self.BJCPData.style:
             self.BJCPStyleComboBox.addItem(BJCPStyle)
          
@@ -653,6 +660,11 @@ class BeeralyzerGui(QtGui.QMainWindow):
     
     def displayHistoryTableFont(self, family, size):
         self.fontLineEdit.setText(family + ", " + str(size))
+
+    def checkForBeeralyzerDir(self):
+        if not os.path.exists(BEERALYZER_DIRECTORY):
+            os.mkdir(BEERALYZER_DIRECTORY)
+
     
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

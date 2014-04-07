@@ -7,12 +7,13 @@ from PyQt4.QtGui import QDialog
 from PyQt4 import uic
 from PyQt4 import QtGui
 from constants import VERSION
+from resource_path import resourcePath
 
 class AboutWindow(QDialog):
 
     def __init__(self, parent):
         QtGui.QMainWindow.__init__(self, parent)
-        self.ui = uic.loadUi('about.ui', self)
+        self.ui = uic.loadUi(resourcePath('about.ui'), self)
         self.setModal(True)
         self.connectActions()
         self.versionLabel.setText("Version " + VERSION)
