@@ -1,0 +1,28 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icons/new_banner.png</file>
+    <file>icons/bin-metal.png</file>
+    <file>icons/block.png</file>
+    <file>icons/brief.png</file>
+    <file>icons/bubble_lines.png</file>
+    <file>icons/clock.png</file>
+    <file>icons/cloud_alt.png</file>
+    <file>icons/cog.png</file>
+    <file>icons/connectivity.png</file>
+    <file>icons/cross.png</file>
+    <file>icons/disk-black.png</file>
+    <file>icons/document-export.png</file>
+    <file>icons/flag.png</file>
+    <file>icons/information.png</file>
+    <file>icons/minus.png</file>
+    <file>icons/pencil.png</file>
+    <file>icons/plus.png</file>
+    <file>icons/printer.png</file>
+    <file>icons/refresh.png</file>
+    <file>icons/ruler.png</file>
+    <file>icons/sticky-note.png</file>
+    <file>icons/user.png</file>
+    <file>icons/wand.png</file>
+    <file>icons/warning.png</file>
+  </qresource>
+</RCC>

@@ -28,7 +28,7 @@ from history_tablemodel import BeeralyzerTableModel
 from measure_notes import MeasureNotes
 from portfolio import BeerPortfolio
 from resource_path import resourcePath
-from qrc_resources import *
+import images_rc
 
 TEST= False
 

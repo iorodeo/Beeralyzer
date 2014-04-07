@@ -118,7 +118,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>new_banner.png</pixmap>
+          <pixmap resource="images.qrc">:/icons/icons/new_banner.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>false</bool>
@@ -137,15 +137,15 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="measureTab">
        <property name="layoutDirection">
         <enum>Qt::LeftToRight</enum>
        </property>
        <attribute name="icon">
-        <iconset>
-         <normaloff>icons/ruler.png</normaloff>icons/ruler.png</iconset>
+        <iconset resource="images.qrc">
+         <normaloff>:/icons/icons/ruler.png</normaloff>:/icons/icons/ruler.png</iconset>
        </attribute>
        <attribute name="title">
         <string>Measure!</string>
@@ -425,8 +425,8 @@
                      <string>Calibrate</string>
                     </property>
                     <property name="icon">
-                     <iconset>
-                      <normaloff>icons/wand.png</normaloff>icons/wand.png</iconset>
+                     <iconset resource="images.qrc">
+                      <normaloff>:/icons/icons/wand.png</normaloff>:/icons/icons/wand.png</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -473,8 +473,8 @@
                      <string>Measure!</string>
                     </property>
                     <property name="icon">
-                     <iconset>
-                      <normaloff>icons/ruler.png</normaloff>icons/ruler.png</iconset>
+                     <iconset resource="images.qrc">
+                      <normaloff>:/icons/icons/ruler.png</normaloff>:/icons/icons/ruler.png</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -501,7 +501,7 @@
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap>icons/warning.png</pixmap>
+                <pixmap resource="images.qrc">:/icons/icons/warning.png</pixmap>
                </property>
               </widget>
              </item>
@@ -514,7 +514,7 @@
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap>icons/warning.png</pixmap>
+                <pixmap resource="images.qrc">:/icons/icons/warning.png</pixmap>
                </property>
               </widget>
              </item>
@@ -831,8 +831,8 @@
                   <string>Save</string>
                  </property>
                  <property name="icon">
-                  <iconset>
-                   <normaloff>icons/disk-black.png</normaloff>icons/disk-black.png</iconset>
+                  <iconset resource="images.qrc">
+                   <normaloff>:/icons/icons/disk-black.png</normaloff>:/icons/icons/disk-black.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -855,8 +855,8 @@
                   <string>...</string>
                  </property>
                  <property name="icon">
-                  <iconset>
-                   <normaloff>icons/bubble_lines.png</normaloff>icons/bubble_lines.png</iconset>
+                  <iconset resource="images.qrc">
+                   <normaloff>:/icons/icons/bubble_lines.png</normaloff>:/icons/icons/bubble_lines.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -871,8 +871,8 @@
       </widget>
       <widget class="QWidget" name="historyTab">
        <attribute name="icon">
-        <iconset>
-         <normaloff>icons/clock.png</normaloff>icons/clock.png</iconset>
+        <iconset resource="images.qrc">
+         <normaloff>:/icons/icons/clock.png</normaloff>:/icons/icons/clock.png</iconset>
        </attribute>
        <attribute name="title">
         <string>History</string>
@@ -923,8 +923,8 @@
                 <string>Erase</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>icons/bin-metal.png</normaloff>icons/bin-metal.png</iconset>
+                <iconset resource="images.qrc">
+                 <normaloff>:/icons/icons/bin-metal.png</normaloff>:/icons/icons/bin-metal.png</iconset>
                </property>
               </widget>
              </item>
@@ -949,8 +949,8 @@
                 <string>Export</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>icons/document-export.png</normaloff>icons/document-export.png</iconset>
+                <iconset resource="images.qrc">
+                 <normaloff>:/icons/icons/document-export.png</normaloff>:/icons/icons/document-export.png</iconset>
                </property>
               </widget>
              </item>
@@ -975,8 +975,8 @@
                 <string>Delete</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>icons/cross.png</normaloff>icons/cross.png</iconset>
+                <iconset resource="images.qrc">
+                 <normaloff>:/icons/icons/cross.png</normaloff>:/icons/icons/cross.png</iconset>
                </property>
               </widget>
              </item>
@@ -992,8 +992,8 @@
       </widget>
       <widget class="QWidget" name="portfolioTab">
        <attribute name="icon">
-        <iconset>
-         <normaloff>icons/brief.png</normaloff>icons/brief.png</iconset>
+        <iconset resource="images.qrc">
+         <normaloff>:/icons/icons/brief.png</normaloff>:/icons/icons/brief.png</iconset>
        </attribute>
        <attribute name="title">
         <string>Portfolio</string>
@@ -1194,8 +1194,8 @@
                <string>Add</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>icons/plus.png</normaloff>icons/plus.png</iconset>
+               <iconset resource="images.qrc">
+                <normaloff>:/icons/icons/plus.png</normaloff>:/icons/icons/plus.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -1223,8 +1223,8 @@
                <string>Edit</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>icons/pencil.png</normaloff>icons/pencil.png</iconset>
+               <iconset resource="images.qrc">
+                <normaloff>:/icons/icons/pencil.png</normaloff>:/icons/icons/pencil.png</iconset>
               </property>
              </widget>
             </item>
@@ -1252,8 +1252,8 @@
                <string>Delete</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normaloff>icons/cross.png</normaloff>icons/cross.png</iconset>
+               <iconset resource="images.qrc">
+                <normaloff>:/icons/icons/cross.png</normaloff>:/icons/icons/cross.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -1497,8 +1497,8 @@
                   <string>Save</string>
                  </property>
                  <property name="icon">
-                  <iconset>
-                   <normaloff>icons/disk-black.png</normaloff>icons/disk-black.png</iconset>
+                  <iconset resource="images.qrc">
+                   <normaloff>:/icons/icons/disk-black.png</normaloff>:/icons/icons/disk-black.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -1523,8 +1523,8 @@
                   <string>Cancel</string>
                  </property>
                  <property name="icon">
-                  <iconset>
-                   <normaloff>icons/block.png</normaloff>icons/block.png</iconset>
+                  <iconset resource="images.qrc">
+                   <normaloff>:/icons/icons/block.png</normaloff>:/icons/icons/block.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -1546,8 +1546,8 @@
       </widget>
       <widget class="QWidget" name="configurationTab">
        <attribute name="icon">
-        <iconset>
-         <normaloff>icons/cog.png</normaloff>icons/cog.png</iconset>
+        <iconset resource="images.qrc">
+         <normaloff>:/icons/icons/cog.png</normaloff>:/icons/icons/cog.png</iconset>
        </attribute>
        <attribute name="title">
         <string>Configuration</string>
@@ -1616,8 +1616,8 @@
                   <string>Refresh</string>
                  </property>
                  <property name="icon">
-                  <iconset>
-                   <normaloff>icons/refresh.png</normaloff>icons/refresh.png</iconset>
+                  <iconset resource="images.qrc">
+                   <normaloff>:/icons/icons/refresh.png</normaloff>:/icons/icons/refresh.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -1645,8 +1645,8 @@
                   <string>Connect</string>
                  </property>
                  <property name="icon">
-                  <iconset>
-                   <normaloff>icons/connectivity.png</normaloff>icons/connectivity.png</iconset>
+                  <iconset resource="images.qrc">
+                   <normaloff>:/icons/icons/connectivity.png</normaloff>:/icons/icons/connectivity.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -1955,7 +1955,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">
@@ -2000,6 +2000,8 @@
   <tabstop>defaultColorUnitsCombobox</tabstop>
   <tabstop>defaultTurbidityUnitsCombobox</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>
